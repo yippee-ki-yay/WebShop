@@ -13,9 +13,9 @@ public class KomadNamestaja implements Serializable
 	private String nazivProizvodjaca;
 	private String jedinicnaCena;
 	private String Kolicina;
-	private KategorijaNamestaja tipNamestaja;
+	private String tipNamestaja_naziv; //Foreign
 	private String godinaProizvodnje;
-	private Salon prodajniSalon;
+	private String prodajniSalon_pib; //Foreign
 	private String putanjaSlike;
 	
 	public KomadNamestaja(){}
@@ -25,8 +25,8 @@ public class KomadNamestaja implements Serializable
 	public KomadNamestaja(String sifra, String naziv, String boja,
 			String zemljaProizvodje, String nazivProizvodjaca,
 			String jedinicnaCena, String kolicina,
-			KategorijaNamestaja tipNamestaja, String godinaProizvodnje,
-			Salon prodajniSalon, String putanjaSlike) {
+			String tipNamestaja, String godinaProizvodnje,
+			String prodajniSalon, String putanjaSlike) {
 		super();
 		this.sifra = sifra;
 		this.naziv = naziv;
@@ -35,9 +35,9 @@ public class KomadNamestaja implements Serializable
 		this.nazivProizvodjaca = nazivProizvodjaca;
 		this.jedinicnaCena = jedinicnaCena;
 		Kolicina = kolicina;
-		this.tipNamestaja = tipNamestaja;
+		this.tipNamestaja_naziv = tipNamestaja;
 		this.godinaProizvodnje = godinaProizvodnje;
-		this.prodajniSalon = prodajniSalon;
+		this.prodajniSalon_pib = prodajniSalon;
 		this.putanjaSlike = putanjaSlike;
 	}
 
@@ -99,12 +99,12 @@ public class KomadNamestaja implements Serializable
 		Kolicina = kolicina;
 	}
 
-	public KategorijaNamestaja getTipNamestaja() {
-		return tipNamestaja;
+	public String getTipNamestaja() {
+		return tipNamestaja_naziv;
 	}
 
-	public void setTipNamestaja(KategorijaNamestaja tipNamestaja) {
-		this.tipNamestaja = tipNamestaja;
+	public void setTipNamestaja(String tipNamestaja) {
+		this.tipNamestaja_naziv = tipNamestaja;
 	}
 
 	public String getGodinaProizvodnje() {
@@ -115,12 +115,12 @@ public class KomadNamestaja implements Serializable
 		this.godinaProizvodnje = godinaProizvodnje;
 	}
 
-	public Salon getProdajniSalon() {
-		return prodajniSalon;
+	public String getProdajniSalon() {
+		return prodajniSalon_pib;
 	}
 
-	public void setProdajniSalon(Salon prodajniSalon) {
-		this.prodajniSalon = prodajniSalon;
+	public void setProdajniSalon(String prodajniSalon) {
+		this.prodajniSalon_pib = prodajniSalon;
 	}
 
 	public String getPutanjaSlike() {

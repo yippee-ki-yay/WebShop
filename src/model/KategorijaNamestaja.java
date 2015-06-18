@@ -12,6 +12,16 @@ public class KategorijaNamestaja implements Serializable
 	
 	public KategorijaNamestaja(){}
 
+	public KategorijaNamestaja(String naziv, String opis,
+			KategorijaNamestaja podkategrija) {
+		super();
+		this.naziv = naziv;
+		this.opis = opis;
+		this.podkategrija = podkategrija;
+	}
+
+
+
 	public String getNaziv() {
 		return naziv;
 	}

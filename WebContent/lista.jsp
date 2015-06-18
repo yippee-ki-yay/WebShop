@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
+       <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,21 +19,64 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <script src="js/bootstrap-formhelpers-countries.js"></script>
+    <script src="js/bootstrap-formhelpers-countries.en_US.js"></script>
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
-<body>
+<script>
+	$(document).ready(function()
+	{
+		$("#search").click(function()
+				{
+			
+					$.get("SearchServlet?searchText=" + $("#searchBox").val(), function(data, status)
+							{ 
+								var namestajiList = data;
+								
+								$(".namestaji > .row").empty();
+								
+								$.each(namestajiList, function(index, value)
+										{
+											$('.namestaji > .row').append(namestajiHTML(value));
+										});
+							});
+				});
+		
+			function namestajiHTML(value)
+			{
+				var str = '<div class="col-sm-4 col-lg-4 col-md-4">'+
+                '<div class="thumbnail">'+
+                '<img src="http://placehold.it/320x150" alt="">'+
+                '<div class="caption">'+
+                   '<h4 class="pull-right">' + value.jedinicnaCena + '</h4>'+
+                    '<h4><a href="#">'+ value.naziv +'</a>'+
+                   '</h4>'+
+                   '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+
+                    '<p>Zemlja porekla: '+ value.zemljaProizvodje +'</p>'+
+                    '<p>Naziv proizvodjaca: ' + value.nazivProizvodjaca +'</p>'+
+                '</div>'+
+                '<div class="ratings">'+
+                    '<p class="pull-right">' + value.kolicina + ' komada</p>'+
+                    '<p>'+
+							value.godinaProizvodnje +
+                    '</p>'+
+                    '</div>'+
+                  '</div>'+
+               '</div>';
+				
+				return str;
+			}
+	});
+</script>
 
+<body>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -72,16 +117,31 @@
          <div class="panel-heading">
         <div class="row">
         <div class="col-md-4 col-md-offset-4">
-        <input type="text" class="form-control" name="searchText">
+        <input type="text" class="form-control" id="searchBox">
          </div>
-        <button class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" id="search">Search</button>
         </div>
         </div>
+        
+        <div class="panel-body">
+           <div class="col-md-4 col-md-offset-4">
+          		<div class="checkbox">
+          			<label> <input type="checkbox"> Naziv</label>
+          		</div>
+          		<div class="col-xs-4">
+          			<input type="text" class="form-control">
+          		</div>
+          		<select data-country="US"></select>
+          		
+           </div>
+        </div>
+        
         </div>
         </div>
 
+	<div class="namestaji">
 	<div class="row">
-				<c:forEach var="n" items="${namestaji.namestajiProba}">
+				<c:forEach var="n" items="${namestaji.namestajiList}">
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
                             <img src="http://placehold.it/320x150" alt="">
@@ -96,15 +156,15 @@
                             <div class="ratings">
                                 <p class="pull-right">${n.kolicina } komada</p>
                                 <p>
-  										${n.prodajniSalon }
+  										${n.godinaProizvodnje }
                                 </p>
                             </div>
                         </div>
                     </div>
 					</c:forEach>
 
-
-                        </div>
+            </div>
+            </div>
               
 
             </div>

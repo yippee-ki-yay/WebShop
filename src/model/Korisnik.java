@@ -8,8 +8,8 @@ public class Korisnik implements Serializable
 	
 	public enum Uloga {KUPCI, MENADZERI, PRODAVCI};
 	
-	private String username;
-	private String ime; //jedinstveno
+	private String username; //jedinstveno
+	private String ime;
 	private String prezime;
 	private String sifra;
 	private Uloga uloga;

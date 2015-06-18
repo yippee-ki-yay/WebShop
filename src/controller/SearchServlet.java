@@ -19,7 +19,7 @@ import dao.SaloniDAO;
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private NamestajiDAO namestaji = new NamestajiDAO();
+	//private NamestajiDAO namestaji = new NamestajiDAO();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,11 +36,14 @@ public class SearchServlet extends HttpServlet {
 		
 		response.setContentType("text/json");
 		
+		String tekst = request.getParameter("searchText");
+		
 		PrintWriter out = response.getWriter();
 		
-		getServletContext().setAttribute("namestaji", namestaji);
+		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
 		
-		String json = namestaji.getJSON();
+		String json = namestaji.search(tekst, "name");
+		//String json = namestaji.getJSON();
 		
 		System.out.println(json);
 		

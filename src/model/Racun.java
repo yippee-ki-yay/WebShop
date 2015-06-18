@@ -5,20 +5,20 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Racun implements Serializable
 {
-	private KomadNamestaja namestaj;
+	private String namestaj_sifra; //Foreign
 	private String porez;
 	private String ukupnaCena;
 	private String datumVreme;
-	private Korisnik kupac;
+	private String kupac_username; //Foreign
 	
 	public Racun(){}
 
-	public KomadNamestaja getNamestaj() {
-		return namestaj;
+	public String getNamestaj() {
+		return namestaj_sifra;
 	}
 
-	public void setNamestaj(KomadNamestaja namestaj) {
-		this.namestaj = namestaj;
+	public void setNamestaj(String namestaj) {
+		this.namestaj_sifra = namestaj;
 	}
 
 	public String getPorez() {
@@ -45,12 +45,12 @@ public class Racun implements Serializable
 		this.datumVreme = datumVreme;
 	}
 
-	public Korisnik getKupac() {
-		return kupac;
+	public String getKupac() {
+		return kupac_username;
 	}
 
-	public void setKupac(Korisnik kupac) {
-		this.kupac = kupac;
+	public void setKupac(String kupac) {
+		this.kupac_username = kupac;
 	}
 	
 }
