@@ -8,7 +8,7 @@
      	<c:redirect url="index.jsp"></c:redirect>
   </c:if>
   
-    	<c:forEach var="n" items="${namestaji.namestajiList}">
+    	<c:forEach var="n" items="${namestaji.items}">
   		<c:if test="${n.sifra == param['id']}">
   			<c:set var="trenutni" value="${namestaji.getJSON(n)}"></c:set>
   		</c:if>
@@ -188,7 +188,7 @@
     <input class="form-control" id="kolicina"> 
     <label for="user">Tip namestaja:</label>
        <select class="form-control" id="tip_namestaja"> 
-    <c:forEach var="tip" items="${tipoviNamestaja.tipNamestajaList}">
+    <c:forEach var="tip" items="${tipoviNamestaja.items}">
     <option>${tip.naziv}</option>
     </c:forEach>
     </select>
@@ -199,7 +199,7 @@
     <label for="user">Prodajni salon:</label>
     
     <select class="form-control" id="salon"> 
-    <c:forEach var="salon" items="${ saloni.saloniLista}">
+    <c:forEach var="salon" items="${ saloni.items}">
     <option>${salon.naziv}</option>
     </c:forEach>
     </select>

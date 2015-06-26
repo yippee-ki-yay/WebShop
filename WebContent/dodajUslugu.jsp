@@ -8,7 +8,7 @@
      	<c:redirect url="index.jsp"></c:redirect>
   </c:if>
   
-  	<c:forEach var="n" items="${usluge.uslugeList}">
+  	<c:forEach var="n" items="${usluge.items}">
   		<c:if test="${n.naziv == param['id']}">
   			<c:set var="trenutni" value="${usluge.getJSON(n)}"></c:set>
   		</c:if>

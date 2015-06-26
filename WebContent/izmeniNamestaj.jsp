@@ -111,7 +111,7 @@
     <input class="form-control" name="kolicina"> 
     <label for="user"><h2>Tip namestaja:</h2></label>
        <select class="form-control" name="tip_namestaja"> 
-    <c:forEach var="tip" items="${tipnamestaja.tipnamestajaMap}">
+    <c:forEach var="tip" items="${tipnamestaja.items}">
     <option>${tip.key}</option>
     </c:forEach>
     </select>
@@ -122,7 +122,7 @@
     <label for="user"><h2>Prodajni salon:</h2></label>
     
     <select class="form-control" name="salon"> 
-    <c:forEach var="salon" items="${ saloni.saloniLista}">
+    <c:forEach var="salon" items="${ saloni.items}">
     <option>${salon.naziv}</option>
     </c:forEach>
     </select>

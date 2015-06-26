@@ -4,6 +4,7 @@
     
        <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
        <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
+       <jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -38,8 +39,28 @@
 	{
 		$("#search").click(function()
 				{
-			
-					$.get("SearchServlet?searchText=" + $("#searchBox").val(), function(data, status)
+					var p_naziv = $("#searchBox").val();
+					var p_boja = $("#boja").val();
+					var p_godina = $("#god").val();
+					var p_drzava = $("#drzava").val();
+					var p_tip = $("#tip_namestaja").val();
+					var p_cena_od = $("#cena_od").val();
+					var p_cena_do = $("#cena_do").val();
+					var p_kapacitet = $("#kapacitet").val();
+					var p_proizvodjac = $("#proizvodjac").val();
+					
+					$.get("SearchServlet", 
+							{naziv: p_naziv,
+							 boja: p_boja,
+							 godina: p_godina,
+							 drzava: p_drzava,
+							 tip: p_tip,
+							 cena_od: p_cena_od,
+							 cena_do: p_cena_do,
+							 kapacitet: p_kapacitet,
+							 proizvodjac: p_proizvodjac
+							}, 
+							function(data, status)
 							{ 
 								var namestajiList = data;
 								
@@ -134,26 +155,96 @@
         </div>
         
         <div class="panel-body">
-           <div class="col-md-4 col-md-offset-4">
-          		<div class="checkbox">
-          			<label> <input type="checkbox"> Naziv</label>
-          		</div>
-          		<div class="col-xs-6">
-          			<input type="text" class="form-control">
-          			<div class="bfh-selectbox bfh-countries" data-country="US" >
-          		</div>
-          		
+        
+        <div class="col-md-1">
+        	<label>Boja: </label>
+        </div>
+        
+           <div class="col-md-2">
+          		<select class="form-control" id="boja">
+          			<option value="default"></option>
+          			<option>Black</option>
+    				<option>White</option>
+    				<option>Blue</option>
+    				<option>Red</option>
+    				<option>Green</option>
+          		</select>
+          	</div>
+          
+         <div class="col-md-1">
+        	<label>Godina: </label>
+        </div>
+          
+          <div class="col-md-2" >
+          		<input type="text" class="form-control" id="god">
+          </div>
+          
+         <div class="col-md-1">
+        	<label>Drzava: </label>
+        </div>
+          
+          <div class="col-md-2">
+          		<div class="bfh-selectbox bfh-countries" data-country="" id="drzava"></div>
+          </div>
+          
+           <div class="col-md-1">
+        	<label>Kategorije: </label>
+        	</div>
+        
+           <div class="col-md-2">
+             <select class="form-control" id="tip_namestaja"> 
+             	<option value="default"></option>
+    			<c:forEach var="tip" items="${tipoviNamestaja.items}">
+    				<option>${tip.naziv}</option>
+    			</c:forEach>
+    		  </select>
+    		</div>	
            </div>
+           
+           <div class="panel-body dropdown">
+           		<div class="col-md-1">
+        			<label>Cena od: </label>
+        		</div>
+        		
+        		<div class="col-md-1">
+          			<input type="text" class="form-control" id="cena_od">
+         		 </div>
+         		 
+         		<div class="col-md-1">
+        			<label>Do: </label>
+        		</div>
+        		
+        		<div class="col-md-1">
+          			<input type="text" class="form-control" id="cena_do">
+         		 </div>
+         		 
+         		 <div class="col-md-1">
+        			<label>Kapacitet: </label>
+        		</div>
+        		
+        		<div class="col-md-1">
+          			<input type="text" class="form-control" id="kapacitet">
+         		 </div>
+         		 
+         		 <div class="col-md-1">
+        			<label>Proizvodjaci: </label>
+        		</div>
+        		
+        		<div class="col-md-2">
+          			<input type="text" class="form-control" id="proizvodjac">
+         		 </div>
+        		
+        	</div>
+           
         </div>
         
         </div>
-        </div>
-        </div>
+ 
 
 	<div class="namestaji">
 	<div class="row">
-				<c:forEach var="n" items="${namestaji.namestajiList}">
-                    <div class="col-sm-4 col-lg-4 col-md-4">
+				<c:forEach var="n" items="${namestaji.items}">
+                    <div class="col-sm-3 col-lg-3 col-md-3">
                         <div class="thumbnail">
                             <img src="http://placehold.it/320x150" alt="">
                             <div class="caption">

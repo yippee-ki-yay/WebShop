@@ -1,8 +1,13 @@
 package dao;
 
 import static org.fusesource.leveldbjni.JniDBFactory.bytes;
+import static org.fusesource.leveldbjni.JniDBFactory.factory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.iq80.leveldb.Options;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,91 +15,41 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.DodatneUsluge;
 import model.KomadNamestaja;
 
-public class UslugeDao 
+public class UslugeDao extends GenericDAO<DodatneUsluge>
 {
-	private ArrayList<DodatneUsluge> uslugeList = new ArrayList<DodatneUsluge>();
-	
-	//TODO: ubaci trajno cuvanje podataka
 	
 	public UslugeDao()
 	{
-		uslugeList.add(new DodatneUsluge("prevoz", "dovozimo namestaj do vase lokacije", "300"));
-		uslugeList.add(new DodatneUsluge("ugradnja", "sklopimo namestaj i ugradimo ga na licu mesta", "700"));
-		uslugeList.add(new DodatneUsluge("samaranje", "bacimo par samara", "100"));
-		uslugeList.add(new DodatneUsluge("resturacija", "obnova starog namestaja", "1000"));
-	}
-	
-	public synchronized void addUsluge(DodatneUsluge komad)
-	{
-		for(int i = 0; i< uslugeList.size();++i)
-		{
-			if(uslugeList.get(i).getNaziv().equals(komad.getNaziv()))
-			{
-				uslugeList.set(i, komad);
-				return;
-			}
-		}
-		uslugeList.add(komad);
+		openDb("usluge");
 		
-	}
-	
-	public synchronized boolean izbrisiUslugu(String naziv)
-	{
-		for(int i = 0; i < uslugeList.size(); ++i)
-		{
-			if(uslugeList.get(i).getNaziv().equals(naziv))
-			{
-				uslugeList.remove(i);
-			//	db.delete(bytes(sifra));
-				return true;
-			}
-			
-		}
+		//addData();
 		
-		return false;
+		readFile();
 	}
 	
-	public synchronized ArrayList<DodatneUsluge> getUslugeList() {
-		return uslugeList;
-	}
-
-	public synchronized void setUslugeList(ArrayList<DodatneUsluge> uslugeList) {
-		this.uslugeList = uslugeList;
-	}
-
-	public String getJSON()
+	
+	private void addData()
 	{
-		ObjectMapper objectMap = new ObjectMapper();
+		items.add(new DodatneUsluge("prevoz", "dovozimo namestaj do vase lokacije", "300"));
+		items.add(new DodatneUsluge("ugradnja", "sklopimo namestaj i ugradimo ga na licu mesta", "700"));
+		items.add(new DodatneUsluge("samaranje", "bacimo par samara", "100"));
+		items.add(new DodatneUsluge("resturacija", "obnova starog namestaja", "1000"));
+		
+		Options options = new Options();
+		options.createIfMissing(true);
 		
 		try {
-			String namestajiJSON = objectMap.writeValueAsString(uslugeList);
+			db = factory.open(new File("usluge"), options);
 			
-			return namestajiJSON;
+			for(DodatneUsluge n : items)
+			{
+				db.put(bytes(n.getId()), serialize(n));
+			}
 			
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-			
-		return "";
-	}
-	
-	public String getJSON(DodatneUsluge d)
-	{
-		ObjectMapper objectMap = new ObjectMapper();
-		
-				try {
-					String namestajiJSON = objectMap.writeValueAsString(d);
-					
-					return namestajiJSON;
-					
-				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-		return "";
 	}
 	
 }

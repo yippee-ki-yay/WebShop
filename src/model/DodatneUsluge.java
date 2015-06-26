@@ -2,8 +2,10 @@ package model;
 
 import java.io.Serializable;
 
+import dao.Idao;
+
 @SuppressWarnings("serial")
-public class DodatneUsluge implements Serializable, Purchasable
+public class DodatneUsluge implements Serializable, Purchasable, Idao
 {
 	private String naziv; //jedinstven
 	private String opis;
@@ -54,6 +56,11 @@ public class DodatneUsluge implements Serializable, Purchasable
 	public String getNazivSalona() {
 		// TODO Auto-generated method stub
 		return ""; //usluge ne pripadaju salonu ?
+	}
+
+	@Override
+	public String getId() {
+		return naziv;
 	}
 	
 }

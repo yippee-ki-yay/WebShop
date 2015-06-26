@@ -8,7 +8,7 @@
      	<c:redirect url="index.jsp"></c:redirect>
   </c:if>
   
-   	<c:forEach var="n" items="${tipoviNamestaja.tipNamestajaList}">
+   	<c:forEach var="n" items="${tipoviNamestaja.items}">
   		<c:if test="${n.naziv == param['id']}">
   			<c:set var="trenutni" value="${tipoviNamestaja.getJSON(n)}"></c:set>
   		</c:if>
@@ -145,7 +145,7 @@
   			
   			 <label for="user">Podkategorija:</label>
       		 <select class="form-control" name="tip_namestaja" id="podkategorija"> 
-    			<c:forEach var="tip" items="${tipoviNamestaja.tipNamestajaList}">
+    			<c:forEach var="tip" items="${tipoviNamestaja.items}">
    				 <option>${tip.naziv}</option>
     			</c:forEach>
     		 </select>

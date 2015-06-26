@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Kupovina implements Serializable
 {
-	private static final long serialVersionUID = 1L;
 	private String naziv;
 	private String cenom;
 	private String kolicinom;

@@ -18,8 +18,6 @@ import dao.SaloniDAO;
 @WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	//private NamestajiDAO namestaji = new NamestajiDAO();
        
     /**
      * @see HttpServlet#HttpServlet()

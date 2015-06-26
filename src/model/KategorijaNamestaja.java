@@ -2,8 +2,10 @@ package model;
 
 import java.io.Serializable;
 
+import dao.Idao;
+
 @SuppressWarnings("serial")
-public class KategorijaNamestaja implements Serializable
+public class KategorijaNamestaja implements Serializable, Idao
 {
 
 	private String naziv; //jedinstven
@@ -44,6 +46,11 @@ public class KategorijaNamestaja implements Serializable
 
 	public void setPodkategrija(String podkategrija) {
 		this.podkategrija = podkategrija;
+	}
+
+	@Override
+	public String getId() {
+		return naziv;
 	}
 	
 }

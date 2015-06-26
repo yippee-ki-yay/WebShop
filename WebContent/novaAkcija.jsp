@@ -154,7 +154,7 @@
         </div>
          <div class="col-md-2">
          	<select class="form-control" id="saloni">
-         		<c:forEach var="salon" items="${saloni.saloniLista}">
+         		<c:forEach var="salon" items="${saloni.items}">
         			<option>${salon.naziv}</option>
         		</c:forEach>
         	</select> 

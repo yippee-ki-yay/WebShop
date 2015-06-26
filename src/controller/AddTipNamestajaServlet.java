@@ -53,7 +53,7 @@ public class AddTipNamestajaServlet extends HttpServlet {
 		
 		TipNamestajaDAO tipoviNamestaja = (TipNamestajaDAO)getServletContext().getAttribute("tipoviNamestaja");
 		
-		tipoviNamestaja.addTipNamestaja(tipNamestaja);
+		tipoviNamestaja.add(tipNamestaja);
 		
 		pw.print("success");
 	}

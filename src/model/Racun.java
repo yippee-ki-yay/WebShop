@@ -3,8 +3,10 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import dao.Idao;
+
 @SuppressWarnings("serial")
-public class Racun implements Serializable
+public class Racun implements Serializable, Idao
 {
 	private ArrayList<Kupovina> items = new ArrayList<Kupovina>();
 	private String namestaj_sifra; //Foreign
@@ -58,6 +60,12 @@ public class Racun implements Serializable
 
 	public void setKupac(String kupac) {
 		this.kupac_username = kupac;
+	}
+
+	@Override
+	public String getId() 
+	{
+		return namestaj_sifra;
 	}
 	
 }

@@ -1,98 +1,57 @@
 package dao;
 
 import static org.fusesource.leveldbjni.JniDBFactory.bytes;
+import static org.fusesource.leveldbjni.JniDBFactory.factory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.iq80.leveldb.Options;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.DodatneUsluge;
 import model.KategorijaNamestaja;
+import model.KomadNamestaja;
 
-public class TipNamestajaDAO 
+public class TipNamestajaDAO extends GenericDAO<KategorijaNamestaja>
 {
-
-	private ArrayList<KategorijaNamestaja> tipNamestajaList = new ArrayList<KategorijaNamestaja>();
 	
 	public TipNamestajaDAO()
 	{
-		tipNamestajaList.add(new KategorijaNamestaja("kreveti", "legnes na njih da spavas", "null"));
-		tipNamestajaList.add(new KategorijaNamestaja("stolovi", "ono bas su ok", "null"));
-		tipNamestajaList.add(new KategorijaNamestaja("ormani", "legnes na njih da spavas", "null"));
-		tipNamestajaList.add(new KategorijaNamestaja("kompjuterski stolovi", "stavis komp na njih", "stolovi"));
-		tipNamestajaList.add(new KategorijaNamestaja("fotelje", "sednes uzivas pijes", "null"));
+		//openDb("tipnamestaja");
+		
+		addData();
+		
+		//readFile();
 	}
 
-	public synchronized ArrayList<KategorijaNamestaja> getTipNamestajaList() {
-		return tipNamestajaList;
-	}
-
-	public synchronized void setTipNamestajaList(
-			ArrayList<KategorijaNamestaja> tipNamestajaList) {
-		this.tipNamestajaList = tipNamestajaList;
-	}
 	
-	public synchronized boolean izbrisiTipNamestaja(String naziv)
+	private void addData()
 	{
-		for(int i = 0; i < tipNamestajaList.size(); ++i)
-		{
-			if(tipNamestajaList.get(i).getNaziv().equals(naziv))
-			{
-				tipNamestajaList.remove(i);
-				return true;
-			}
-		}
-			
-		return false;	
-	}
-	
-	public synchronized void addTipNamestaja(KategorijaNamestaja tip)
-	{
-		for(int i = 0; i< tipNamestajaList.size();++i)
-		{
-			if(tipNamestajaList.get(i).getNaziv().equals(tip.getNaziv()))
-			{
-				tipNamestajaList.set(i, tip);
-				return;
-			}
-		}
-		tipNamestajaList.add(tip);
+		items.add(new KategorijaNamestaja("kreveti", "legnes na njih da spavas", "null"));
+		items.add(new KategorijaNamestaja("stolovi", "ono bas su ok", "null"));
+		items.add(new KategorijaNamestaja("ormani", "legnes na njih da spavas", "null"));
+		items.add(new KategorijaNamestaja("kompjuterski stolovi", "stavis komp na njih", "stolovi"));
+		items.add(new KategorijaNamestaja("fotelje", "sednes uzivas pijes", "null"));
 		
-	}
-	
-	public String getJSON()
-	{
-		ObjectMapper objectMap = new ObjectMapper();
+		Options options = new Options();
+		options.createIfMissing(true);
 		
 		try {
-			String namestajiJSON = objectMap.writeValueAsString(tipNamestajaList);
+			db = factory.open(new File("tipnamestaja"), options);
 			
-			return namestajiJSON;
+			for(KategorijaNamestaja n : items)
+			{
+				db.put(bytes(n.getId()), serialize(n));
+			}
 			
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return "";
-	}
-	
-	public String getJSON(KategorijaNamestaja kn)
-	{
-		ObjectMapper objectMap = new ObjectMapper();
-		
-		try {
-			String namestajiJSON = objectMap.writeValueAsString(kn);
-			
-			return namestajiJSON;
-			
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "";
 	}
 }

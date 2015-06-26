@@ -92,7 +92,7 @@
     				{
     						$.get("SearchServlet", function(data, status) 
     	    					{
-    	    						namestaji = data;
+    	    						namestaji = $.parseJSON(data);
     	    					
     	    						$.each(namestaji, function(index, value)
     								{
@@ -325,7 +325,7 @@
 
                 <div class="row podaci">
                 
-				<c:forEach var="n" items="${namestaji.namestajiList}">
+				<c:forEach var="n" items="${namestaji.items}">
                     <div class="col-sm-4 col-lg-4 col-md-4 box" id="${n.sifra}">
                         <div class="thumbnail">
                             <img src="http://placehold.it/320x150" alt="">

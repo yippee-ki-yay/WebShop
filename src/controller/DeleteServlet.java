@@ -44,7 +44,7 @@ public class DeleteServlet extends HttpServlet {
 		
 		if(type.equals("Namestaji"))
 		{
-			if(namestaji.izbrisiNamestaj(sifra))
+			if(namestaji.remove(sifra))
 			{
 				pw.print("success");
 			}
@@ -55,7 +55,7 @@ public class DeleteServlet extends HttpServlet {
 		}
 		else if(type.equals("Dodatne usluge"))
 		{
-			if(usluge.izbrisiUslugu(sifra))
+			if(usluge.remove(sifra))
 			{
 				pw.print("success");
 			}
@@ -66,7 +66,7 @@ public class DeleteServlet extends HttpServlet {
 		}
 		else
 		{
-			if(tipoviNamestaja.izbrisiTipNamestaja(sifra))
+			if(tipoviNamestaja.remove(sifra))
 			{
 				pw.print("success");
 			}

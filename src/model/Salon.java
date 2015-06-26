@@ -2,8 +2,10 @@ package model;
 
 import java.io.Serializable;
 
+import dao.Idao;
+
 @SuppressWarnings("serial")
-public class Salon implements Serializable
+public class Salon implements Serializable, Idao
 {
 	private String naziv;
 	private String adresa;
@@ -91,6 +93,12 @@ public class Salon implements Serializable
 
 	public void setZiroRacun(String ziroRacun) {
 		this.ziroRacun = ziroRacun;
+	}
+
+	@Override
+	public String getId() 
+	{
+		return pib;
 	}
 	
 }

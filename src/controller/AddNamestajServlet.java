@@ -55,7 +55,7 @@ public class AddNamestajServlet extends HttpServlet {
 		
 		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
 		
-		namestaji.addNamestaj(namestaj);
+		namestaji.add(namestaj);
 		
 		pw.print("success");
 		

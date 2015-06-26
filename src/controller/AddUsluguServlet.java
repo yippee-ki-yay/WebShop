@@ -54,7 +54,7 @@ public class AddUsluguServlet extends HttpServlet {
 		
 		UslugeDao usluge = (UslugeDao)getServletContext().getAttribute("usluge");
 		
-		usluge.addUsluge(usluga);
+		usluge.add(usluga);
 		
 		//getServletContext().setAttribute("usluge", usluga);
 		

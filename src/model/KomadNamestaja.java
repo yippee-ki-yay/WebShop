@@ -2,10 +2,11 @@ package model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
-public class KomadNamestaja implements Serializable, Purchasable
-{
+import dao.Idao;
 
+@SuppressWarnings("serial")
+public class KomadNamestaja implements Serializable, Purchasable, Idao
+{
 	private String sifra; //jedinstven
 	private String naziv;
 	private String boja;
@@ -147,6 +148,14 @@ public class KomadNamestaja implements Serializable, Purchasable
 	public String getNazivSalona() {
 		// TODO Auto-generated method stub
 		return prodajniSalon;
+	}
+
+
+
+	@Override
+	public String getId() 
+	{
+		return sifra;
 	}
 	
 	
