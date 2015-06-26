@@ -49,6 +49,39 @@ body {
     color: #333;
 }
 
+.box_selected
+{
+	border-style: solid;
+	border-width: 2px;
+	cursor: pointer;
+	
+}
+
+.btn_padding
+{
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.panel-label
+{
+	padding-top: 7px;
+	font-size: 20px;
+	color: black;
+}
+
+.korpa
+{
+	font-style: bold;
+	
+	margin-top: -10px;
+}
+
+.top_part
+{
+	padding-bottom: 20px;
+}
+
 footer {
     margin: 50px 0;
 }

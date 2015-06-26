@@ -12,10 +12,10 @@ public class KomadNamestaja implements Serializable
 	private String zemljaProizvodje;
 	private String nazivProizvodjaca;
 	private String jedinicnaCena;
-	private String Kolicina;
-	private String tipNamestaja_naziv; //Foreign
+	private String kolicina;
+	private String tipNamestaja; //Foreign
 	private String godinaProizvodnje;
-	private String prodajniSalon_pib; //Foreign
+	private String prodajniSalon; //Foreign
 	private String putanjaSlike;
 	
 	public KomadNamestaja(){}
@@ -34,10 +34,10 @@ public class KomadNamestaja implements Serializable
 		this.zemljaProizvodje = zemljaProizvodje;
 		this.nazivProizvodjaca = nazivProizvodjaca;
 		this.jedinicnaCena = jedinicnaCena;
-		Kolicina = kolicina;
-		this.tipNamestaja_naziv = tipNamestaja;
+		this.kolicina = kolicina;
+		this.tipNamestaja = tipNamestaja;
 		this.godinaProizvodnje = godinaProizvodnje;
-		this.prodajniSalon_pib = prodajniSalon;
+		this.prodajniSalon = prodajniSalon;
 		this.putanjaSlike = putanjaSlike;
 	}
 
@@ -92,19 +92,19 @@ public class KomadNamestaja implements Serializable
 	}
 
 	public String getKolicina() {
-		return Kolicina;
+		return kolicina;
 	}
 
 	public void setKolicina(String kolicina) {
-		Kolicina = kolicina;
+		kolicina = kolicina;
 	}
 
 	public String getTipNamestaja() {
-		return tipNamestaja_naziv;
+		return tipNamestaja;
 	}
 
 	public void setTipNamestaja(String tipNamestaja) {
-		this.tipNamestaja_naziv = tipNamestaja;
+		this.tipNamestaja = tipNamestaja;
 	}
 
 	public String getGodinaProizvodnje() {
@@ -116,11 +116,11 @@ public class KomadNamestaja implements Serializable
 	}
 
 	public String getProdajniSalon() {
-		return prodajniSalon_pib;
+		return prodajniSalon;
 	}
 
 	public void setProdajniSalon(String prodajniSalon) {
-		this.prodajniSalon_pib = prodajniSalon;
+		this.prodajniSalon = prodajniSalon;
 	}
 
 	public String getPutanjaSlike() {

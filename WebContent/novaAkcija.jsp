@@ -4,6 +4,11 @@
     
        <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
        <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
+       <jsp:useBean id="saloni" class="dao.SaloniDAO" scope="application"></jsp:useBean>
+       
+          <c:if test="${!korisnik.isAdmin()}">
+     	<c:redirect url="index.jsp"></c:redirect>
+     </c:if>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -36,29 +41,38 @@
 <script>
 	$(document).ready(function()
 	{
-		$("#search").click(function()
-				{
+		//prikaz namestaja nekog salona, kad izaberemo neki
+		$("#saloni").change(function() 
+		{
+			var current = $( "#saloni option:selected" ).text();
 			
-					$.get("SearchServlet?searchText=" + $("#searchBox").val(), function(data, status)
-							{ 
-								var namestajiList = data;
-								
-								$(".namestaji > .row").empty();
-								
-								$.each(namestajiList, function(index, value)
-										{
-											$('.namestaji > .row').append(namestajiHTML(value));
-										});
-							});
-				});
-		
-			function namestajiHTML(value)
+			$.get("SearchServlet", {poSalonu : current}, function(data, status)
 			{
-				var str = '<div class="col-sm-4 col-lg-4 col-md-4">'+
+				namestaji = $.parseJSON(data);
+				
+				//prodji kroz sve podatke i generi html
+				$.each(namestaji, function(index, value)
+				{
+					$('.podaci').append(namestajiHtml(value));
+				});
+			});
+		});
+		
+		
+		
+		$("#dodaj").click(function()
+		{
+			
+					
+		});
+		
+			function namestajiHtml(value)
+			{
+				var str = '<div class="col-sm-3 col-lg-3 col-md-3">'+
                 '<div class="thumbnail">'+
                 '<img src="http://placehold.it/320x150" alt="">'+
                 '<div class="caption">'+
-                   '<h4 class="pull-right">' + value.jedinicnaCena + '</h4>'+
+                   '<h4 class="pull-right">$' + value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
                    '</h4>'+
                    '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+
@@ -68,7 +82,8 @@
                 '<div class="ratings">'+
                     '<p class="pull-right">' + value.kolicina + ' komada</p>'+
                     '<p>'+
-							value.godinaProizvodnje +
+                    		'<h3>Popust </h3>'+
+							'<input type="text" class="form-control">'+
                     '</p>'+
                     '</div>'+
                   '</div>'+
@@ -76,6 +91,8 @@
 				
 				return str;
 			}
+			
+			
 	});
 </script>
 
@@ -96,7 +113,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                     <li>
+                      <li>
                         <a href="lista.jsp">Pretrazi</a>
                     </li>
                     <c:if test="${!korisnik.isUlogovan()}">
@@ -107,11 +124,17 @@
                         <a href="admin_login.jsp">Admin</a>
                     </li>
                     </c:if>
-                     <c:if test="${korisnik.isUlogovan() }">
+                    <c:if test="${korisnik.isAdmin()}">
+                     	 <li>
+                      		 <a href="admin_panel.jsp">Panel</a>
+                   		 </li>
+                    </c:if>
+                      <c:if test="${korisnik.isUlogovan() }">
                         <li> 
                         	<a href="LogoutServlet">Odloguj se</a>
                         </li>
                       </c:if>
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -126,22 +149,37 @@
         <div class="panel panel-info">
          <div class="panel-heading">
         <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-        <input type="text" class="form-control" id="searchBox">
+        <div class="col-md-1 panel-label">
+        	<label>Salon: </label>
+        </div>
+         <div class="col-md-2">
+         	<select class="form-control" id="saloni">
+         		<c:forEach var="salon" items="${saloni.saloniLista}">
+        			<option>${salon.naziv}</option>
+        		</c:forEach>
+        	</select> 
          </div>
-        <button class="btn btn-primary" id="search">Search</button>
+        <div class="col-md-1 panel-label">
+        	<label>Pocetak: </label>
+        </div>
+         <div class="col-md-2">
+         	<div class="bfh-datepicker"></div>
+         </div>
+         <div class="col-md-1 panel-label">
+        	<label>Kraj: </label>
+        </div>
+         <div class="col-md-2">
+          	<div class="bfh-datepicker"></div>
+         </div>
+         <div class="col-md-2">
+  			<button class="btn btn-primary" id="dodaj">Dodaj akciju</button>
+  		</div>
         </div>
         </div>
         
         <div class="panel-body">
            <div class="col-md-4 col-md-offset-4">
-          		<div class="checkbox">
-          			<label> <input type="checkbox"> Naziv</label>
-          		</div>
-          		<div class="col-xs-6">
-          			<input type="text" class="form-control">
-          			<div class="bfh-selectbox bfh-countries" data-country="US" >
-          		</div>
+          		
           		
            </div>
         </div>
@@ -150,35 +188,12 @@
         </div>
         </div>
 
-	<div class="namestaji">
-	<div class="row">
-				<c:forEach var="n" items="${namestaji.namestajiList}">
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$${n.jedinicnaCena }</h4>
-                                <h4><a href="#">${ n.naziv}</a>
-                                </h4>
-                                <p>Proizvodjac: ${n.nazivProizvodjaca}</p>
-                                <p>Zemlja porekla: ${n.zemljaProizvodje }</p>
-                                <p>Naziv proizvodjaca: ${n.nazivProizvodjaca }</p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">${n.kolicina } komada</p>
-                                <p>
-  										${n.godinaProizvodnje }
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-					</c:forEach>
+	<div class="container">
+		<div class="row podaci">
+			
 
-            </div>
-            </div>
-              
-
-            </div>
+    	</div>
+    </div>  
 
 
     <!-- /.container -->

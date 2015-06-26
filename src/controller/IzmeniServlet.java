@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,24 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import dao.NamestajiDAO;
 import dao.UslugeDao;
-import model.DodatneUsluge;
-import model.KomadNamestaja;
 
 /**
- * Servlet implementation class AddNamestajServlet
+ * Servlet implementation class IzmeniServlet
  */
-@WebServlet("/AddNamestajServlet")
-public class AddNamestajServlet extends HttpServlet {
+@WebServlet("/IzmeniServlet")
+public class IzmeniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddNamestajServlet() {
+    public IzmeniServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +29,7 @@ public class AddNamestajServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -43,22 +37,16 @@ public class AddNamestajServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PrintWriter pw = response.getWriter();
+		//pokupimo id koji si mi poslao i setujemo trenutni elem koji menjam
+		/*String id = request.getParameter("id");
 		
-		String jsonNamestaj = request.getParameter("u");
+		UslugeDao usluge = (UslugeDao) getServletContext().getAttribute("usluge");
 		
-		ObjectMapper mapper = new ObjectMapper();
+		String json = usluge.getJSON(id);
 		
-		System.out.println(jsonNamestaj);
+		System.out.println("izmeniservlet:  " + json);
 		
-		KomadNamestaja namestaj = mapper.readValue(jsonNamestaj, KomadNamestaja.class);
-		
-		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
-		
-		namestaji.addNamestaj(namestaj);
-		
-		pw.print("success");
-		
+	    getServletContext().setAttribute("curr", json);*/
 	}
 
 }

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
+     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
     <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
     
 <!DOCTYPE html>
@@ -52,13 +54,35 @@
                     <li>
                         <a href="lista.jsp">Pretrazi</a>
                     </li>
+                     <c:if test="${korisnik == null }">
                     <li>
-                        <a href="login_test.html">Prijava</a>
+                        <a href="login_test.jsp">Prijava</a>
                     </li>
                     <li>
-                        <a href="admin_login.html">Admin</a>
+                        <a href="admin_login.jsp">Admin</a>
                     </li>
-                </ul>
+                   </c:if>
+                    <c:if test="${korisnik.isAdmin()}">
+                     	 <li>
+                      		 <a href="admin_panel.jsp">Panel</a>
+                   		 </li>
+                    </c:if>
+                   <c:if test="${korisnik != null }">
+                        <li> 
+                        	<a href="LogoutServlet">Odloguj se:</a>
+                        </li>
+                        </c:if>
+                        
+                        </ul>
+                  
+                            <ul class="nav navbar-nav navbar-right">
+                        	<li>
+                        		<a href="korpa.jsp" class="korpa">
+                        			<img src="img/shop_cart.png"></img>
+                        		</a>
+                        	</li>
+                        </ul>
+                
             </div>
             <!-- /.navbar-collapse -->
         </div>

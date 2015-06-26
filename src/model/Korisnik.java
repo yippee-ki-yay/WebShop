@@ -16,6 +16,8 @@ public class Korisnik implements Serializable
 	private String telefon;
 	private String email;
 	
+	private boolean ulogovan = false;
+	
 	public Korisnik(){}
 	
 	public Korisnik(String username, String ime, String prezime, String sifra,
@@ -86,6 +88,30 @@ public class Korisnik implements Serializable
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public boolean isUlogovan() {
+		return ulogovan;
+	}
+
+	public void setUlogovan(boolean ulogovan) {
+		this.ulogovan = ulogovan;
+	}
 	
+	public boolean isAdmin()
+	{
+		if(ulogovan && uloga == Uloga.PRODAVCI)
+			return true;
+		
+		return false;
+	}
+	
+	
+	public boolean isManadzer()
+	{
+		if(ulogovan && uloga == Uloga.MENADZERI)
+			return true;
+		
+		return false;
+	}
 	
 }

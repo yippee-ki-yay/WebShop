@@ -8,12 +8,12 @@ public class KategorijaNamestaja implements Serializable
 
 	private String naziv; //jedinstven
 	private String opis;
-	private KategorijaNamestaja podkategrija;
+	private String podkategrija;
 	
 	public KategorijaNamestaja(){}
 
 	public KategorijaNamestaja(String naziv, String opis,
-			KategorijaNamestaja podkategrija) {
+			String podkategrija) {
 		super();
 		this.naziv = naziv;
 		this.opis = opis;
@@ -38,11 +38,11 @@ public class KategorijaNamestaja implements Serializable
 		this.opis = opis;
 	}
 
-	public KategorijaNamestaja getPodkategrija() {
+	public String getPodkategrija() {
 		return podkategrija;
 	}
 
-	public void setPodkategrija(KategorijaNamestaja podkategrija) {
+	public void setPodkategrija(String podkategrija) {
 		this.podkategrija = podkategrija;
 	}
 	

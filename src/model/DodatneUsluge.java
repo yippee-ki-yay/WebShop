@@ -11,6 +11,15 @@ public class DodatneUsluge implements Serializable
 	
 	public DodatneUsluge(){}
 
+	public DodatneUsluge(String naziv, String opis, String cena) {
+		super();
+		this.naziv = naziv;
+		this.opis = opis;
+		this.cena = cena;
+	}
+
+	
+
 	public String getNaziv() {
 		return naziv;
 	}

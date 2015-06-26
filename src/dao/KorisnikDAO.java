@@ -27,13 +27,12 @@ public class KorisnikDAO
 	
 	public KorisnikDAO()
 	{
-		/*listaKorisnika.add(new Korisnik("yolo", "shone", "shonovic", "1234", Uloga.KUPCI, "0642342", "yolo@gmail.com"));
-		listaKorisnika.add(new Korisnik("yolo", "shone", "shonovic", "1234", Uloga.KUPCI, "0642342", "yolo@gmail.com"));
-		listaKorisnika.add(new Korisnik("yolo", "shone", "shonovic", "1234", Uloga.KUPCI, "0642342", "yolo@gmail.com"));
-		listaKorisnika.add(new Korisnik("yolo", "shone", "shonovic", "1234", Uloga.KUPCI, "0642342", "yolo@gmail.com"));*/
+		listaKorisnika.add(new Korisnik("user", "shone", "shonovic", "user", Uloga.KUPCI, "06323422", "user@gmail.com"));
+		listaKorisnika.add(new Korisnik("admin", "petar", "petrovic", "admin", Uloga.PRODAVCI, "06942342", "admin@gmail.com"));
+		listaKorisnika.add(new Korisnik("man", "marko", "markovic", "man", Uloga.MENADZERI, "06402342", "man@gmail.com"));
 		
-		//writeFile();
-		readFile();
+		writeFile();
+		//readFile();
 	}
 	
 	@SuppressWarnings("unchecked")

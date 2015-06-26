@@ -9,24 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DodatneUsluge;
+import model.KategorijaNamestaja;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.NamestajiDAO;
+import dao.TipNamestajaDAO;
 import dao.UslugeDao;
-import model.DodatneUsluge;
-import model.KomadNamestaja;
 
 /**
- * Servlet implementation class AddNamestajServlet
+ * Servlet implementation class AddTipNamestajaServlet
  */
-@WebServlet("/AddNamestajServlet")
-public class AddNamestajServlet extends HttpServlet {
+@WebServlet("/AddTipNamestajaServlet")
+public class AddTipNamestajaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddNamestajServlet() {
+    public AddTipNamestajaServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,30 +36,26 @@ public class AddNamestajServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		PrintWriter pw = response.getWriter();
 		
-		String jsonNamestaj = request.getParameter("u");
+		String jsonTip = request.getParameter("u");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		System.out.println(jsonNamestaj);
+		KategorijaNamestaja tipNamestaja = mapper.readValue(jsonTip, KategorijaNamestaja.class);
 		
-		KomadNamestaja namestaj = mapper.readValue(jsonNamestaj, KomadNamestaja.class);
+		TipNamestajaDAO tipoviNamestaja = (TipNamestajaDAO)getServletContext().getAttribute("tipoviNamestaja");
 		
-		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
-		
-		namestaji.addNamestaj(namestaj);
+		tipoviNamestaja.addTipNamestaja(tipNamestaja);
 		
 		pw.print("success");
-		
 	}
 
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,24 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import dao.NamestajiDAO;
+import dao.KorisnikDAO;
 import dao.UslugeDao;
-import model.DodatneUsluge;
-import model.KomadNamestaja;
 
 /**
- * Servlet implementation class AddNamestajServlet
+ * Servlet implementation class UslugeServlet
  */
-@WebServlet("/AddNamestajServlet")
-public class AddNamestajServlet extends HttpServlet {
+@WebServlet("/UslugeServlet")
+public class UslugeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddNamestajServlet() {
+    public UslugeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,30 +30,20 @@ public class AddNamestajServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		
-		PrintWriter pw = response.getWriter();
+		UslugeDao usluge = (UslugeDao) getServletContext().getAttribute("usluge");
 		
-		String jsonNamestaj = request.getParameter("u");
+		String json = usluge.getJSON();
 		
-		ObjectMapper mapper = new ObjectMapper();
-		
-		System.out.println(jsonNamestaj);
-		
-		KomadNamestaja namestaj = mapper.readValue(jsonNamestaj, KomadNamestaja.class);
-		
-		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
-		
-		namestaji.addNamestaj(namestaj);
-		
-		pw.print("success");
-		
+		response.getWriter().print(json);
 	}
 
 }

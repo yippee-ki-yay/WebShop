@@ -10,21 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.NamestajiDAO;
-import dao.SaloniDAO;
+import dao.TipNamestajaDAO;
+import dao.UslugeDao;
 
 /**
- * Servlet implementation class SearchServlet
+ * Servlet implementation class DeleteServlet
  */
-@WebServlet("/SearchServlet")
-public class SearchServlet extends HttpServlet {
+@WebServlet("/DeleteServlet")
+public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	//private NamestajiDAO namestaji = new NamestajiDAO();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchServlet() {
+    public DeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,37 +32,49 @@ public class SearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//TODO: refector this shit
-		
-		PrintWriter out = response.getWriter();
-		
-		String tekst = request.getParameter("searchText");
-		
-		String poSalonu = request.getParameter("poSalonu");
+		// TODO Auto-generated method stub
+		PrintWriter pw = response.getWriter();
 		
 		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
+		UslugeDao usluge = (UslugeDao)getServletContext().getAttribute("usluge");
+		TipNamestajaDAO tipoviNamestaja = (TipNamestajaDAO)getServletContext().getAttribute("tipoviNamestaja");
 		
-		//ako ovde imamo nesto znaci da trazim namestaje po nekom salonu
-		if(poSalonu != null || poSalonu == "")
+		String sifra = request.getParameter("sifra");
+		String type = request.getParameter("type");
+		
+		if(type.equals("Namestaji"))
 		{
-			String json = namestaji.searchBySalon(poSalonu);
-			out.print(json);
-			return;
+			if(namestaji.izbrisiNamestaj(sifra))
+			{
+				pw.print("success");
+			}
+			else
+			{
+				pw.print("fail");
+			}
 		}
-		
-		//ako nema nista u tekst parametru daj mi sve namestaje
-		if(tekst == null || tekst == "")
+		else if(type.equals("Dodatne usluge"))
 		{
-			out.print(namestaji.getJSON());
-			return;
+			if(usluge.izbrisiUslugu(sifra))
+			{
+				pw.print("success");
+			}
+			else
+			{
+				pw.print("fail");
+			}
 		}
-		
-		String json = namestaji.search(tekst, "name");
-		//String json = namestaji.getJSON();
-		
-		out.print(json);
-		
+		else
+		{
+			if(tipoviNamestaja.izbrisiTipNamestaja(sifra))
+			{
+				pw.print("success");
+			}
+			else
+			{
+				pw.print("fail");
+			}
+		}
 	}
 
 	/**

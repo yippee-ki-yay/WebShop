@@ -9,24 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DodatneUsluge;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.NamestajiDAO;
 import dao.UslugeDao;
-import model.DodatneUsluge;
-import model.KomadNamestaja;
 
 /**
- * Servlet implementation class AddNamestajServlet
+ * Servlet implementation class AddUsluguServlet
  */
-@WebServlet("/AddNamestajServlet")
-public class AddNamestajServlet extends HttpServlet {
+@WebServlet("/AddUsluguServlet")
+public class AddUsluguServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddNamestajServlet() {
+    public AddUsluguServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +34,7 @@ public class AddNamestajServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -45,20 +44,21 @@ public class AddNamestajServlet extends HttpServlet {
 		
 		PrintWriter pw = response.getWriter();
 		
-		String jsonNamestaj = request.getParameter("u");
+		String jsonUsluga = request.getParameter("u");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		System.out.println(jsonNamestaj);
+		System.out.println(jsonUsluga);
 		
-		KomadNamestaja namestaj = mapper.readValue(jsonNamestaj, KomadNamestaja.class);
+		DodatneUsluge usluga = mapper.readValue(jsonUsluga, DodatneUsluge.class);
 		
-		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
+		UslugeDao usluge = (UslugeDao)getServletContext().getAttribute("usluge");
 		
-		namestaji.addNamestaj(namestaj);
+		usluge.addUsluge(usluga);
+		
+		//getServletContext().setAttribute("usluge", usluga);
 		
 		pw.print("success");
-		
 	}
 
 }

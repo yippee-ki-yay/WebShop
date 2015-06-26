@@ -30,24 +30,24 @@ public class NamestajiDAO
 	
 	public NamestajiDAO()
 	{
-		Options options = new Options();
+		/*
+	    Options options = new Options();
 		options.createIfMissing(true);
 		
 		try {
 			db = factory.open(new File("namestaji"), options);	
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		
-		
-		/*String kat = "stolovi";
+		String kat = "stolovi";
 		String s = "simpo";
 		
-		namestajiList.add(new KomadNamestaja("234","Mega astal", "plava", "srbija", "simpo", "20", "2", kat, "1990" ,s, "slika"));
-		namestajiList.add(new KomadNamestaja("2344","Sto za komp", "plava", "srbija", "simpo", "33", "2", kat, "1990" ,s, "slika"));
-		namestajiList.add(new KomadNamestaja("2342","Lampa", "plava", "srbija", "simpo", "208", "8", kat, "1990" ,s, "slika"));
-		namestajiList.add(new KomadNamestaja("2341","Krevet", "plava", "srbija", "simpo", "20", "2", kat, "1990" ,s, "slika"));
+		namestajiList.add(new KomadNamestaja("234","Mega astal", "Black", "srbija", "simpo", "20", "2", kat, "1990" ,s, "slika"));
+		namestajiList.add(new KomadNamestaja("1344","Sto za komp", "Red", "srbija", "simpo", "33", "2", kat, "1990" ,s, "slika"));
+		namestajiList.add(new KomadNamestaja("2342","Lampa", "plava", "White", "simpo", "208", "8", kat, "1990" ,s, "slika"));
+		namestajiList.add(new KomadNamestaja("2341","Krevet", "plava", "Black", "simpo", "20", "2", kat, "1990" ,s, "slika"));
 		
 		
 		Options options = new Options();
@@ -66,18 +66,52 @@ public class NamestajiDAO
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
-		readFile();
+		//readFile();
 		
 
 	}
 	
 	public synchronized void addNamestaj(KomadNamestaja komad)
 	{
+		for(int i = 0; i< namestajiList.size();++i)
+		{
+			if(namestajiList.get(i).getNaziv().equals(komad.getNaziv()))
+			{
+				namestajiList.set(i, komad);
+				db.put(bytes(komad.getSifra()), serialize(komad));
+				return;
+			}
+		}
 		namestajiList.add(komad);
 		
-		db.put(bytes(komad.getSifra()), serialize(komad));
+	}
+	
+	public synchronized String searchBySalon(String salon)
+	{
+		ObjectMapper objectMap = new ObjectMapper();
+		
+		ArrayList<KomadNamestaja> tmpList = new ArrayList<KomadNamestaja>();
+		
+		for(KomadNamestaja n : namestajiList)
+		{
+			if(n.getProdajniSalon().equals(salon))
+			{
+				tmpList.add(n);
+			}
+		}
+		
+		if(tmpList.size() > 0)
+		{
+			try {
+				return objectMap.writeValueAsString(tmpList);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "";
 	}
 	
 	public synchronized void izmeniNamestaj(KomadNamestaja komad)
@@ -91,11 +125,24 @@ public class NamestajiDAO
 		db.put(bytes(komad.getSifra()), serialize(komad));
 	}
 	
-	public synchronized void izbrisiNamestaj(String sifra)
+	public synchronized boolean izbrisiNamestaj(String sifra)
 	{
 		
+		System.out.println("SIZE: " + namestajiList.size());
+		for(int i = 0; i < namestajiList.size(); ++i)
+		{
+			if(namestajiList.get(i).getSifra().equals(sifra))
+			{
+				System.out.println("NASAO");
+				namestajiList.remove(i);
+				db.delete(bytes(sifra));
+				return true;
+			}
+		}
+			
+		return false;	
 	}
-	}
+	
 	
 	public synchronized String search(String text, String type)
 	{
@@ -127,12 +174,33 @@ public class NamestajiDAO
 		return "";
 	}
 	
+	
+	
 	public String getJSON()
 	{
 		ObjectMapper objectMap = new ObjectMapper();
 		
 		try {
 			String namestajiJSON = objectMap.writeValueAsString(namestajiList);
+			
+			return namestajiJSON;
+			
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return "";
+	}
+	
+	public String getJSON(KomadNamestaja n)
+	{
+		ObjectMapper objectMap = new ObjectMapper();
+		
+		try {
+			String namestajiJSON = objectMap.writeValueAsString(n);
 			
 			return namestajiJSON;
 			
