@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class KomadNamestaja implements Serializable
+public class KomadNamestaja implements Serializable, Purchasable
 {
 
 	private String sifra; //jedinstven
@@ -51,6 +51,7 @@ public class KomadNamestaja implements Serializable
 		this.sifra = sifra;
 	}
 
+	@Override
 	public String getNaziv() {
 		return naziv;
 	}
@@ -91,12 +92,13 @@ public class KomadNamestaja implements Serializable
 		this.jedinicnaCena = jedinicnaCena;
 	}
 
+	@Override
 	public String getKolicina() {
 		return kolicina;
 	}
 
 	public void setKolicina(String kolicina) {
-		kolicina = kolicina;
+		this.kolicina = kolicina;
 	}
 
 	public String getTipNamestaja() {
@@ -129,6 +131,22 @@ public class KomadNamestaja implements Serializable
 
 	public void setPutanjaSlike(String putanjaSlike) {
 		this.putanjaSlike = putanjaSlike;
+	}
+
+
+
+	@Override
+	public String getCena() {
+		// TODO Auto-generated method stub
+		return jedinicnaCena;
+	}
+
+
+
+	@Override
+	public String getNazivSalona() {
+		// TODO Auto-generated method stub
+		return prodajniSalon;
 	}
 	
 	

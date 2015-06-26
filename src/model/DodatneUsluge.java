@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class DodatneUsluge implements Serializable
+public class DodatneUsluge implements Serializable, Purchasable
 {
 	private String naziv; //jedinstven
 	private String opis;
@@ -19,7 +19,7 @@ public class DodatneUsluge implements Serializable
 	}
 
 	
-
+	@Override
 	public String getNaziv() {
 		return naziv;
 	}
@@ -36,12 +36,24 @@ public class DodatneUsluge implements Serializable
 		this.opis = opis;
 	}
 
+	@Override
 	public String getCena() {
 		return cena;
 	}
 
 	public void setCena(String cena) {
 		this.cena = cena;
+	}
+
+	@Override
+	public String getKolicina() {
+		return "1"; //uvek mozes kupiti jednu uslugu
+	}
+
+	@Override
+	public String getNazivSalona() {
+		// TODO Auto-generated method stub
+		return ""; //usluge ne pripadaju salonu ?
 	}
 	
 }

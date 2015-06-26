@@ -1,10 +1,12 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class Racun implements Serializable
 {
+	private ArrayList<Kupovina> items = new ArrayList<Kupovina>();
 	private String namestaj_sifra; //Foreign
 	private String porez;
 	private String ukupnaCena;
@@ -15,6 +17,11 @@ public class Racun implements Serializable
 
 	public String getNamestaj() {
 		return namestaj_sifra;
+	}
+	
+	public void addItem(Purchasable p, String type)
+	{
+		items.add(new Kupovina(p.getNaziv(), p.getCena(), p.getKolicina(), p.getNazivSalona()));
 	}
 
 	public void setNamestaj(String namestaj) {
