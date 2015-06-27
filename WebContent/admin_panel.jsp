@@ -5,6 +5,7 @@
      
      <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
      <jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
+     <jsp:useBean id="akcije" class="dao.AkcijeDAO" scope="application"></jsp:useBean>
      
      <c:if test="${!korisnik.isAdmin()}">
      	<c:redirect url="index.jsp"></c:redirect>

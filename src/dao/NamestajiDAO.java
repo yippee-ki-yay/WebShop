@@ -17,11 +17,11 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 {
 	public NamestajiDAO()
 	{
-		openDb("namestaji");
+		//openDb("namestaji");
 		
-		//addData();
+		addData();
 		
-		readFile();
+		//readFile();
 	}
 
 	

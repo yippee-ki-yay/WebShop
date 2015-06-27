@@ -18,6 +18,7 @@ public class KomadNamestaja implements Serializable, Purchasable, Idao
 	private String godinaProizvodnje;
 	private String prodajniSalon; //Foreign
 	private String putanjaSlike;
+	private String procenat = "";
 	
 	public KomadNamestaja(){}
 	
@@ -138,7 +139,15 @@ public class KomadNamestaja implements Serializable, Purchasable, Idao
 
 	@Override
 	public String getCena() {
-		// TODO Auto-generated method stub
+		
+		/*if(!procenat.equals(""))
+		{
+			int proc = Integer.parseInt(procenat);
+			int originalna = Integer.parseInt(jedinicnaCena);
+			
+			return Integer.toString((originalna - ((proc/100)*originalna)));
+		}*/
+		
 		return jedinicnaCena;
 	}
 
@@ -156,6 +165,18 @@ public class KomadNamestaja implements Serializable, Purchasable, Idao
 	public String getId() 
 	{
 		return sifra;
+	}
+
+
+
+	public String getProcenat() {
+		return procenat;
+	}
+
+
+
+	public void setProcenat(String procenat) {
+		this.procenat = procenat;
 	}
 	
 	

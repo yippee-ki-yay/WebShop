@@ -59,11 +59,33 @@
 		});
 		
 		
-		
-		$("#dodaj").click(function()
+		$(document).on("click","#dodaj", function()
 		{
+			var akcija = {}
+			akcija.startDate = "";
+			akcija.endDate = "";
+			akcija.salon = "";
+			akcija.namestaji = [];
 			
-					
+			$(".namestaj").each(function() 
+			{
+				var sifra = $(this).data("id");
+				var popust = $(this).val();
+				
+				if(popust != "")
+				{
+					item = {}
+			        item ["naziv"] = sifra;
+			        item ["procenat"] = popust;
+					akcija.namestaji.push(item);
+				}
+			});
+			
+			$.post("AkcijaServlet", {json: JSON.stringify(akcija)}, function(data, status)
+			{
+				
+			});
+			
 		});
 		
 			function namestajiHtml(value)
@@ -83,7 +105,7 @@
                     '<p class="pull-right">' + value.kolicina + ' komada</p>'+
                     '<p>'+
                     		'<h3>Popust </h3>'+
-							'<input type="text" class="form-control">'+
+							'<input type="text" class="form-control namestaj" data-id="' +value.sifra +'">'+
                     '</p>'+
                     '</div>'+
                   '</div>'+
