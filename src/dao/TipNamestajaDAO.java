@@ -29,6 +29,13 @@ public class TipNamestajaDAO extends GenericDAO<KategorijaNamestaja>
 		//readFile();
 	}
 
+	public void getKategorijeSalona(String salon)
+	{
+		/*for(KategorijaNamestaja k : items)
+		{
+			if(k.ge)
+		}*/
+	}
 	
 	private void addData()
 	{

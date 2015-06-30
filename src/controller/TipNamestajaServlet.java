@@ -40,6 +40,13 @@ public class TipNamestajaServlet extends HttpServlet {
 		
 		TipNamestajaDAO tipoviNamestaja = (TipNamestajaDAO)getServletContext().getAttribute("tipoviNamestaja");
 		
+		String salon = request.getParameter("salon");
+		
+		if(salon != null || salon != "")
+		{
+			tipoviNamestaja.getKategorijeSalona(salon);
+		}
+		
 		//vratimo stranici json array svih tipova namestaja
 		response.getWriter().print(tipoviNamestaja.getJSON());
 		

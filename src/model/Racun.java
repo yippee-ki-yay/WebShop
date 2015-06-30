@@ -21,9 +21,9 @@ public class Racun implements Serializable, Idao
 		return namestaj_sifra;
 	}
 	
-	public void addItem(Purchasable p, String type)
+	public void addItem(Purchasable p, String type, String kolicina)
 	{
-		items.add(new Kupovina(p.getNaziv(), p.getCena(), p.getKolicina(), p.getNazivSalona()));
+		items.add(new Kupovina(p.getNaziv(), p.getCena(), kolicina, p.getNazivSalona()));
 	}
 
 	public void setNamestaj(String namestaj) {

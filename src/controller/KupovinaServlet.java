@@ -8,21 +8,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Akcija;
-import dao.AkcijeDAO;
 import dao.NamestajiDAO;
+import dao.UslugeDao;
+import model.DodatneUsluge;
+import model.KomadNamestaja;
+import model.Korisnik;
+import model.Purchasable;
 
 /**
- * Servlet implementation class AkcijaServlet
+ * Servlet implementation class KupovinaServlet
  */
-@WebServlet("/AkcijaServlet")
-public class AkcijaServlet extends HttpServlet {
+@WebServlet("/KupovinaServlet")
+public class KupovinaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AkcijaServlet() {
+    public KupovinaServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,24 +42,28 @@ public class AkcijaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AkcijeDAO akcije = (AkcijeDAO)getServletContext().getAttribute("akcije");
-		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
+		Korisnik trenutni = (Korisnik)request.getSession().getAttribute("korisnik");
 		
-		String json = request.getParameter("json");
+		NamestajiDAO namestaji = (NamestajiDAO) getServletContext().getAttribute("namestaji");
+		UslugeDao usluge = (UslugeDao) getServletContext().getAttribute("usluge");
 		
-		System.out.println(json);
+		String type = request.getParameter("type");
+		String id = request.getParameter("id");
+		String kolicina = request.getParameter("kolicina");
 		
-		Akcija a = akcije.fromJson(json);
+		Purchasable p;
 		
-		a.setPopust(namestaji.getItems());
-			
-		akcije.add(a);
+		if(type.equals("Namestaj"))
+		{
+			p = namestaji.findById(id);
+		}
+		else
+		{
+			p = usluge.findById(id);
+		}
 		
-		//TODO: do i need this?
-		//getServletContext().setAttribute("namestaji", namestaji);
+		trenutni.getKorpa().addItem(p, type, kolicina);
 		
-		//ako do ovde nije prslo sve to je uspeh good enough
-		response.getWriter().print("success");
 	}
 
 }

@@ -57,11 +57,10 @@ public class Akcija implements Serializable, Idao
 				{
 					komad.setProcenat(popust.getProcenat());
 					
-					int proc = Integer.parseInt(popust.getProcenat());
-					int originalna = Integer.parseInt(komad.getJedinicnaCena());
+					double proc = Double.parseDouble(popust.getProcenat());
+					double originalna = Double.parseDouble(komad.getJedinicnaCena());
 					
-					String novaCena = Integer.toString((originalna - ((proc/100)*originalna)));
-					System.out.println(novaCena + "Org: " + originalna + "Proc: "+((proc/100)*originalna));
+					String novaCena = Double.toString((originalna - ((proc/100)*originalna)));
 					
 					komad.setJedinicnaCena(novaCena);
 				}
@@ -103,8 +102,8 @@ public class Akcija implements Serializable, Idao
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO FIX this shit
+		return startDate+endDate;
 	}
 	
 	

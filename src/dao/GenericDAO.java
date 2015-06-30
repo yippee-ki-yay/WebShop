@@ -57,6 +57,19 @@ public abstract class GenericDAO<T extends Idao>
 		items.add(novi);
 	}
 	
+	public synchronized T findById(String id)
+	{
+		for(T n : items)
+		{
+			if(n.getId().equals(id))
+			{
+				return n;
+			}
+		}
+		
+		return null;
+	}
+	
 	public synchronized ArrayList<T> getItems() {
 		return items;
 	}

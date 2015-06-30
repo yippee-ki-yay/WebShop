@@ -39,15 +39,26 @@
 </head>
 
 <script>
+	var namestaji;
+
 	$(document).ready(function()
 	{
+		$("#check").prop("disabled", true);
+		
 		//prikaz namestaja nekog salona, kad izaberemo neki
 		$("#saloni").change(function() 
 		{
 			var current = $( "#saloni option:selected" ).text();
 			
+			if(current != "")
+			{
+				$("#check").prop("disabled", false);
+			}
+			
 			$.get("SearchServlet", {poSalonu : current}, function(data, status)
 			{
+				$(".podaci").empty();
+				
 				namestaji = $.parseJSON(data);
 				
 				//prodji kroz sve podatke i generi html
@@ -58,6 +69,28 @@
 			});
 		});
 		
+		$("#check").change(function()
+		{
+			if ($(this).is(':checked'))
+			{
+				$(".podaci").empty();
+				
+				$.post("TipNamestajaServlet", function(data, status) 
+    			{
+    				tipovi_namestaja = $.parseJSON(data);
+    						
+    				//prodji kroz sve podatke i generi html
+    				$.each(tipovi_namestaja, function(index, value)
+    				{
+    					$('.podaci').append(tipoviNamestajaHtml(value));
+    				});
+    			});
+		
+			}
+			else
+				$(".podaci").empty();
+			
+		});
 		
 		$(document).on("click","#dodaj", function()
 		{
@@ -81,9 +114,30 @@
 				}
 			});
 			
+			$(".kategorija").each(function() 
+					{
+						var sifra = $(this).data("id");
+						var popust = $(this).val();
+						
+						$.each(namestaji, function(index, value)
+						{
+							if(popust != "")
+							if(value.tipNamestaja === sifra)
+							{
+								item = {}
+						        item ["naziv"] = value.sifra;
+						        item ["procenat"] = popust;
+								akcija.namestaji.push(item);
+							}
+						});
+					});
+			
 			$.post("AkcijaServlet", {json: JSON.stringify(akcija)}, function(data, status)
 			{
-				
+				if(data === "success")
+				{
+					window.location.replace("admin_panel.jsp");
+				}
 			});
 			
 		});
@@ -114,6 +168,33 @@
 				return str;
 			}
 			
+			function tipoviNamestajaHtml(value)
+    		{
+    			var podkategorija = "Nema";
+    			
+    			if(value.podkategrija !== 'null')
+    				podkategorija = value.podkategrija;
+    			
+    			
+    			var str = '<div class="col-sm-4 col-lg-4 col-md-4" id="'+value.naziv + '">' +
+   			 	'<div class="thumbnail">'+
+               '<div class="caption">'+
+                   '<h4><a href="#">'+ value.naziv +'</a>'+
+                  '</h4>'+
+                  '<p>Proizvodjac: '+ value.opis + '</p>'+
+                  '<p>Podkatgorija: '+ podkategorija + '</p>'+
+               '</div>'+
+               '<div class="ratings">'+
+                  '<p>'+
+                  '<h3>Popust </h3>'+
+					'<input type="text" class="form-control kategorija" data-id="' +value.naziv +'">'+
+				  '</p>'
+                 '</div>'+
+                 '</div>' +
+              '</div>';
+				
+				return str;
+    		}
 			
 	});
 </script>
@@ -176,11 +257,18 @@
         </div>
          <div class="col-md-2">
          	<select class="form-control" id="saloni">
+         		<option value="default"></option>
          		<c:forEach var="salon" items="${saloni.items}">
         			<option>${salon.naziv}</option>
         		</c:forEach>
         	</select> 
          </div>
+              <div class="col-md-2">
+             	<div class="checkbox">
+  					<label><input type="checkbox" value="" id="check">Po kategorijama</label>
+				</div>
+           </div>
+         
         <div class="col-md-1 panel-label">
         	<label>Pocetak: </label>
         </div>
@@ -193,17 +281,10 @@
          <div class="col-md-2">
           	<div class="bfh-datepicker"></div>
          </div>
-         <div class="col-md-2">
-  			<button class="btn btn-primary" id="dodaj">Dodaj akciju</button>
+         <div class="col-md-1">
+  			<button class="btn btn-primary" id="dodaj">Dodaj</button>
   		</div>
         </div>
-        </div>
-        
-        <div class="panel-body">
-           <div class="col-md-4 col-md-offset-4">
-          		
-          		
-           </div>
         </div>
         
         </div>

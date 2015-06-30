@@ -157,11 +157,15 @@
     		
     		function namestajiHtml(value)
 			{
+    			var popust = "";
+    			if(value.procenat != 0)
+    				popust = "Na popustu! : "
+    					
 				var str = '<div class="col-sm-4 col-lg-4 col-md-4" id="' + value.sifra + '">'+
                 '<div class="thumbnail">'+
                 '<img src="http://placehold.it/320x150" alt="">'+
                 '<div class="caption">'+
-                   '<h4 class="pull-right">$' + value.jedinicnaCena + '</h4>'+
+                   '<h4 class="pull-right">$' + popust + value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
                    '</h4>'+
                    '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+

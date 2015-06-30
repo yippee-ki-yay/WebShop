@@ -87,7 +87,8 @@
                     '<p>Naziv proizvodjaca: ' + value.nazivProizvodjaca +'</p>'+
                 '</div>'+
                 '<div class="ratings">'+
-                    '<p class="pull-right">' + value.kolicina + ' komada</p>'+
+                    '<p class="pull-right">'
+                    '<button class="btn btn-success btn_padding del" data-id="' + value.naziv + '">Obrisi</button></p>' +
                     '<p>'+
 							value.godinaProizvodnje +
                     '</p>'+
@@ -97,6 +98,25 @@
 				
 				return str;
 			}
+	});
+	
+	$(document).on("click",".kup", function(){
+		
+		var id = $(this).data("id");
+		var tip = "Namestaj";
+		
+		$.get("KupovinaServlet", {sifra: id, type :tip}, function(data, status)
+				{
+					if(data === "success")
+					{
+						alert("uspesno kupio");
+					}
+					else
+					{
+						alert("des poso");
+					}
+				});
+		
 	});
 </script>
 
@@ -255,12 +275,15 @@
                                 <p>Zemlja porekla: ${n.zemljaProizvodje }</p>
                                 <p>Naziv proizvodjaca: ${n.nazivProizvodjaca }</p>
                             </div>
-                            <div class="ratings">
-                                <p class="pull-right">${n.kolicina } komada</p>
-                                <p>
-  										${n.godinaProizvodnje }
-                                </p>
-                            </div>
+                       
+        					 <p>
+        					 	Kolicina:
+         					   <input class="kolicina" type="number">
+            					<a href="#" class="btn btn-primary btn_padding kup" role="button" data-id="${n.sifra }">
+              								 Kupi
+            				</a>
+         					</p>
+                           
                         </div>
                     </div>
 					</c:forEach>

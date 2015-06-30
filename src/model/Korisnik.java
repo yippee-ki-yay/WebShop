@@ -15,6 +15,7 @@ public class Korisnik implements Serializable
 	private Uloga uloga;
 	private String telefon;
 	private String email;
+	private Racun korpa;
 	
 	private boolean ulogovan = false;
 	
@@ -112,6 +113,14 @@ public class Korisnik implements Serializable
 			return true;
 		
 		return false;
+	}
+
+	public Racun getKorpa() {
+		return korpa;
+	}
+
+	public void setKorpa(Racun korpa) {
+		this.korpa = korpa;
 	}
 	
 }
