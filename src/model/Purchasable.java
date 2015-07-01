@@ -7,5 +7,6 @@ public interface Purchasable
 	public String getCena();
 	public String getKolicina();
 	public String getNazivSalona();
+	public String getSifra();
 	
 }

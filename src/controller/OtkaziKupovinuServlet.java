@@ -8,24 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.NamestajiDAO;
-import dao.UslugeDao;
-import model.DodatneUsluge;
-import model.KomadNamestaja;
 import model.Korisnik;
-import model.Purchasable;
 
 /**
- * Servlet implementation class KupovinaServlet
+ * Servlet implementation class OtkaziKupovinuServlet
  */
-@WebServlet("/KupovinaServlet")
-public class KupovinaServlet extends HttpServlet {
+@WebServlet("/OtkaziKupovinuServlet")
+public class OtkaziKupovinuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public KupovinaServlet() {
+    public OtkaziKupovinuServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,38 +36,15 @@ public class KupovinaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		
 		Korisnik trenutni = (Korisnik)request.getSession().getAttribute("korisnik");
 		
-		NamestajiDAO namestaji = (NamestajiDAO) getServletContext().getAttribute("namestaji");
-		UslugeDao usluge = (UslugeDao) getServletContext().getAttribute("usluge");
-		
-		String type = request.getParameter("type");
 		String id = request.getParameter("sifra");
-		String kolicina = request.getParameter("kolicina");
 		
-		Purchasable p;
+		trenutni.getKorpa().removeItem(id);
 		
-		if(trenutni.isUlogovan() == false)
-		{
-			response.getWriter().print("nije_registrovan");
-			return;
-		}
-		
-		if(type.equals("Namestaj"))
-		{
-			p = namestaji.findById(id);
-			
-			response.getWriter().print("success");
-			trenutni.getKorpa().addItem(p, type, kolicina, id);
-			return;
-		}
-		else
-		{
-			p = usluge.findById(id);
-			trenutni.getKorpa().addItem(p, type, kolicina, id);
-		}
-		
+		response.getWriter().print("success");
 	}
 
 }

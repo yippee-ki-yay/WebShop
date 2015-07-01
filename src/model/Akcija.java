@@ -9,7 +9,7 @@ import dao.Idao;
 public class Akcija implements Serializable, Idao
 {
 	@SuppressWarnings("unused")
-	private static class NamestajPopust
+	private static class NamestajPopust implements Serializable
 	{
 		private String naziv;
 		private String procenat;

@@ -111,6 +111,7 @@ public abstract class GenericDAO<T extends Idao>
 		  for(iterator.seekToFirst(); iterator.hasNext(); iterator.next()) {
 			 
 		    T tmp = (T) deserialize(db.get(iterator.peekNext().getKey()));
+		    if(tmp == null) return;
 		    System.out.println("T: " + tmp.getId());
 		    items.add(tmp);
 		    

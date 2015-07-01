@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
     
      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+     
+     <jsp:useBean id="racuni" class="dao.RacuniDAO" scope="application"></jsp:useBean>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,8 +35,32 @@
     <script>
     	$(document).ready(function()
     	{
-    		
+    		$("#racun").click(function()
+    		{
+    			$.post("AddRacun", {}, function(data, status)
+            	{
+    				$("#content").empty();
+    				alert("dodao racun");
+            	});
+    		});
     	});
+    	
+    	$(document).on("click", ".otkazi", function() 
+        		{
+        			var id = $(this).data("id");
+        			
+        			$.post("OtkaziKupovinuServlet", {sifra: id}, function(data, status)
+        			{
+        				if(data === "success")
+        				{
+        					alert("picke");
+        					$("#"+id).parent().parent().remove();
+        					
+        					return;
+        				}
+        			});
+        			
+        		});
     </script>
 
 </head>
@@ -74,16 +100,53 @@
                         </li>
                         </c:if>
                 </ul>
+                
+                    <ul class="nav navbar-nav navbar-right">
+                        	<li>
+                        		<a href="korpa.jsp" class="korpa">
+                        			<img src="img/shop_cart.png"></img>
+                        		</a>
+                        	</li>
+                        </ul>
+                
+                
             </div>
             <!-- /.navbar-collapse -->
+            
+            
+            
         </div>
         <!-- /.container -->
     </nav>
 
     <!-- Page Content -->
     <div class="container">
-
+		<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Naziv</th>
+        <th>Kolicina</th>
+        <th>Cena</th>
+         <th>Salon</th>
+         <th> </th>
+      </tr>
+    </thead>
+    <tbody id="content">
+    <c:forEach var="item" items="${korisnik.korpa.items }">
+      <tr>
+        <td>${item.naziv}</td>
+        <td>${item.kolicinom}</td>
+        <td>${item.cenom}</td>
+        <td>${item.naziv_salona}</td>
+        <td> <button class="btn btn-danger otkazi"  id="${item.sifra }" data-id="${item.sifra }">Otkazi kupovinu</button></td>
+      </tr>
+    </c:forEach>
+    </tbody>
+  </table>
   
+  	<div class="col-md-2 col-md-offest-8">
+  		<button class="btn btn-success" id="racun">Izdaj racun</button>
+  	</div>
               
     </div>
 

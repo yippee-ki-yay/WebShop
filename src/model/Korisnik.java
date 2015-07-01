@@ -31,6 +31,7 @@ public class Korisnik implements Serializable
 		this.uloga = uloga;
 		this.telefon = telefon;
 		this.email = email;
+		this.korpa = new Racun();
 		
 	}
 

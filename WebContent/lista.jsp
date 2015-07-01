@@ -4,6 +4,7 @@
     
        <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
        <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
+        <jsp:useBean id="korisnik" class="model.Korisnik" scope="session"></jsp:useBean>
        <jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
     
 <!DOCTYPE html>
@@ -103,17 +104,19 @@
 	$(document).on("click",".kup", function(){
 		
 		var id = $(this).data("id");
-		var tip = "Namestaj";
+		var kol = $(this).prev().val();
+		var tip = "Namestaj"; //TODO: kad imam usluge moras promeniti
 		
-		$.get("KupovinaServlet", {sifra: id, type :tip}, function(data, status)
+		$.post("KupovinaServlet", {sifra: id, type :tip, kolicina: kol}, function(data, status)
 				{
 					if(data === "success")
 					{
 						alert("uspesno kupio");
+						 $(this).prev().val("1");
 					}
-					else
+					else if(data === "nije_registrovan")
 					{
-						alert("des poso");
+						alert("morate se registrovati da kupite nesto");
 					}
 				});
 		
@@ -154,6 +157,14 @@
                         </li>
                       </c:if>
                 </ul>
+                
+                    <ul class="nav navbar-nav navbar-right">
+                        	<li>
+                        		<a href="korpa.jsp" class="korpa">
+                        			<img src="img/shop_cart.png"></img>
+                        		</a>
+                        	</li>
+                        </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -278,7 +289,7 @@
                        
         					 <p>
         					 	Kolicina:
-         					   <input class="kolicina" type="number">
+         					   <input class="kolicina" type="number" value="1">
             					<a href="#" class="btn btn-primary btn_padding kup" role="button" data-id="${n.sifra }">
               								 Kupi
             				</a>

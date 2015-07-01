@@ -21,9 +21,27 @@ public class Racun implements Serializable, Idao
 		return namestaj_sifra;
 	}
 	
-	public void addItem(Purchasable p, String type, String kolicina)
+	public void addItem(Purchasable p, String type, String kolicina, String id)
 	{
-		items.add(new Kupovina(p.getNaziv(), p.getCena(), kolicina, p.getNazivSalona()));
+		items.add(new Kupovina(p.getNaziv(), p.getCena(), kolicina, p.getNazivSalona(), id));
+	}
+	
+	public void removeAll()
+	{
+		items.clear();
+	}
+	
+	public void removeItem(String id)
+	{
+		for(Kupovina k : items)
+		{
+			if(k.getSifra().equals(id))
+			{
+				items.remove(k);
+				return;
+			}
+		}
+		
 	}
 
 	public void setNamestaj(String namestaj) {
@@ -60,6 +78,15 @@ public class Racun implements Serializable, Idao
 
 	public void setKupac(String kupac) {
 		this.kupac_username = kupac;
+	}
+	
+
+	public synchronized ArrayList<Kupovina> getItems() {
+		return items;
+	}
+
+	public synchronized void setItems(ArrayList<Kupovina> items) {
+		this.items = items;
 	}
 
 	@Override

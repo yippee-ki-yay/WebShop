@@ -62,5 +62,11 @@ public class DodatneUsluge implements Serializable, Purchasable, Idao
 	public String getId() {
 		return naziv;
 	}
+
+	@Override
+	public String getSifra() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

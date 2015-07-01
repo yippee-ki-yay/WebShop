@@ -321,7 +321,7 @@
                 
                 <div class="list-group">
                 	<h4>Izvestaj</h4>
-                    <a href="dodajNamestaj.jsp" class="list-group-item">Po danima</a>
+                    <a href="izvestajDatumi.jsp" class="list-group-item">Po danima</a>
                     <a href="dodajNamestaj.jsp" class="list-group-item">Po kategoriji</a>
                 </div>
             </div>
