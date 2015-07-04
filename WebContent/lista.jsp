@@ -93,7 +93,7 @@
 			{
 				var str = '<div class="col-sm-3 col-lg-3 col-md-3">'+
                 '<div class="thumbnail">'+
-                '<img src="http://placehold.it/320x150" alt="">'+
+                '<img src="img/' + value.putanjaSlike + '"  alt="">'+
                 '<div class="caption">'+
                    '<h4 class="pull-right">' + value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
@@ -190,6 +190,7 @@
                       
                 </ul>
                 
+                <c:if test="${!korisnik.isAdminOrManadzer()}">
                     <ul class="nav navbar-nav navbar-right">
                         	<li>
                         		<a href="korpa.jsp" class="korpa">
@@ -197,6 +198,7 @@
                         		</a>
                         	</li>
                         </ul>
+                        </c:if>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -317,7 +319,7 @@
 				<c:forEach var="n" items="${namestaji.items}">
                     <div class="col-sm-3 col-lg-3 col-md-3">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="img/${n.putanjaSlike } " alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$${n.jedinicnaCena }</h4>
                                 <h4><a href="#">${ n.naziv}</a>

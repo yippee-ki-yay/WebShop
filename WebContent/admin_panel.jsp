@@ -137,7 +137,7 @@
     					
 				var str = '<div class="col-sm-4 col-lg-4 col-md-4" id="' + value.sifra + '">'+
                 '<div class="thumbnail">'+
-                '<img src="http://placehold.it/320x150" alt="">'+
+                '<img src="img/' + value.putanjaSlike + '"  alt="">'+
                 '<div class="caption">'+
                    '<h4 class="pull-right"><span class="popust">' + popust +"</span>$"+ value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
@@ -314,7 +314,7 @@
 				<c:forEach var="n" items="${namestaji.items}">
                     <div class="col-sm-4 col-lg-4 col-md-4 box" id="${n.sifra}">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                             <img src="img/${n.putanjaSlike } " alt="">
                             <div class="caption">
                                 <h4 class="pull-right">
                                 <c:if test="${n.procenat != 0}">

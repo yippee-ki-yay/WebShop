@@ -143,7 +143,7 @@
 			{
 				var str = '<div class="col-sm-3 col-lg-3 col-md-3">'+
                 '<div class="thumbnail">'+
-                '<img src="http://placehold.it/320x150" alt="">'+
+                '<img src="img/' + value.putanjaSlike + '"  alt="">'+
                 '<div class="caption">'+
                    '<h4 class="pull-right">$' + value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+

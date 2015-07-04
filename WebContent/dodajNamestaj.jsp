@@ -65,7 +65,16 @@
     		if(jup.sifra != undefined)
     			$('#sifra').prop('readonly', true);
     		
-    		$("#sub").click(function() 
+    		$("form").submit(function()
+    		{
+    			/*if($("#sifra").val() == "")
+    			{
+    				alert("Wuuut");
+    				return false;
+    			}*/
+    		});
+    		
+    		/*$("#sub").click(function() 
     	    {
     			//popunimo objekat namestaj koji saljemo serveru
     			var namestaj = {};
@@ -82,15 +91,7 @@
 				namestaj.putanjaSlike = $("#slika").val();
 			
 			//prodjemo kroz sve i proverimo da li je popunjeno
-			/*if(namestaj == null) return;
-			
-			for (var prop in namestaj) 
-			{
-			    if (object.hasOwnProperty(prop)) 
-			    {
-			       if(prop == "")return;
-			    }
-			}*/
+		
 			
 			 $.ajax({
 			     url: 'fileUpload',
@@ -118,7 +119,7 @@
 					}
 				});
 			
-    	    });
+    	    });*/
 			
     	});
     </script>
@@ -174,16 +175,16 @@
         <!-- /.container -->
     </nav>
 
-     <form>       
+     <form action="AddNamestajServlet" method="post" enctype="multipart/form-data">       
     <div class="col-md-4 col-md-offset-4">
        <label for="user">Sifra:</label>
-       <input class="form-control" id="sifra"> 
+       <input class="form-control" id="sifra" name="sifra" required /> 
      
     <label for="user">Naziv:</label>
-    <input class="form-control" id="naziv"> 
+    <input class="form-control" id="naziv" name="naziv" required /> 
     
     <label for="user">Boja:</label>
-    <select class="form-control" id="boja"> 
+    <select class="form-control" id="boja" name="boja"> 
     	<option>Black</option>
     	<option>White</option>
     	<option>Blue</option>
@@ -192,18 +193,18 @@
     </select>
     
     <label for="user">Zemlja proizvodnje:</label>
-    <div class="bfh-selectbox bfh-countries" data-country="US" id="zemlja"></div>
+    <select class="bfh-selectbox bfh-countries form-control" data-country="US" id="zemlja" name="zemlja"></select>
     <label for="user" >Naziv proizvodjaca:</label>
     
-    <input class="form-control" id="proizvodjac"> 
+    <input class="form-control" id="proizvodjac" name="proizvodjac" required /> 
     <label for="user">Cena:</label>
     
-    <input class="form-control"  id="cena"> 
+    <input class="form-control"  id="cena" name="cena" required /> 
     <label for="user">Kolicina:</label>
     
-    <input class="form-control" id="kolicina"> 
+    <input class="form-control" id="kolicina"  name="kolicina" required /> 
     <label for="user">Tip namestaja:</label>
-       <select class="form-control" id="tip_namestaja"> 
+       <select class="form-control" id="tip_namestaja" name="tip_namestaja"> 
     <c:forEach var="tip" items="${tipoviNamestaja.items}">
     <option>${tip.naziv}</option>
     </c:forEach>
@@ -211,17 +212,17 @@
     
     <label for="user">Godina prozvodnje:</label>
     
-    <input class="form-control"  id="godina"> 
+    <input class="form-control"  id="godina" required name="godina" /> 
     <label for="user">Prodajni salon:</label>
     
-    <select class="form-control" id="salon"> 
+    <select class="form-control" id="salon" name="salon"> 
     <c:forEach var="salon" items="${ saloni.items}">
     <option>${salon.naziv}</option>
     </c:forEach>
     </select>
     <label for="user" >Slika:</label>
     
-    <input type="file" accept="image/*" id="slika">
+    <input type="file" accept="image/*" id="slika" name="slika" required />
     <button class="btn btn-primary" id="sub">Dodaj</button>
 	</div>
 	</form>  

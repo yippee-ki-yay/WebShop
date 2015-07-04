@@ -76,6 +76,7 @@
                         
                         </ul>
                   
+                  			<c:if test="${!korisnik.isAdminOrManadzer()}">
                             <ul class="nav navbar-nav navbar-right">
                         	<li>
                         		<a href="korpa.jsp" class="korpa">
@@ -83,6 +84,7 @@
                         		</a>
                         	</li>
                         </ul>
+                        </c:if>
                 
             </div>
             <!-- /.navbar-collapse -->
