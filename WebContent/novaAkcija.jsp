@@ -2,9 +2,6 @@
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-       <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
-       <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
-       <jsp:useBean id="saloni" class="dao.SaloniDAO" scope="application"></jsp:useBean>
        
           <c:if test="${!korisnik.isAdmin()}">
      	<c:redirect url="index.jsp"></c:redirect>
@@ -55,7 +52,7 @@
 				$("#check").prop("disabled", false);
 			}
 			
-			$.get("SearchServlet", {poSalonu : current}, function(data, status)
+			$.post("NamestajiServlet", {poSalonu : current}, function(data, status)
 			{
 				$(".podaci").empty();
 				
@@ -216,8 +213,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                     <li>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                     <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -228,6 +228,11 @@
                     </li>
                     </c:if>
                     <c:if test="${korisnik.isAdmin()}">
+                     	 <li>
+                      		 <a href="admin_panel.jsp">Panel</a>
+                   		 </li>
+                    </c:if>
+                      <c:if test="${korisnik.isAdmin()}">
                      	 <li>
                       		 <a href="admin_panel.jsp">Panel</a>
                    		 </li>

@@ -107,6 +107,14 @@ public class Korisnik implements Serializable
 		return false;
 	}
 	
+	public boolean isAdminOrManadzer()
+	{
+		if((ulogovan && uloga == Uloga.PRODAVCI) || (ulogovan && uloga == Uloga.MENADZERI))
+			return true;
+		
+		return false;
+	}
+	
 	
 	public boolean isManadzer()
 	{

@@ -3,8 +3,6 @@
     
      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-    <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
-    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,9 +50,12 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="lista.jsp">Namestaji</a>
                     </li>
-                     <c:if test="${korisnik == null }">
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
+                    </li>
+                     <c:if test="${!korisnik.isUlogovan()}">
                     <li>
                         <a href="login_test.jsp">Prijava</a>
                     </li>
@@ -67,9 +68,9 @@
                       		 <a href="admin_panel.jsp">Panel</a>
                    		 </li>
                     </c:if>
-                   <c:if test="${korisnik != null }">
+                   <c:if test="${korisnik.isUlogovan()}">
                         <li> 
-                        	<a href="LogoutServlet">Odloguj se:</a>
+                        	<a href="LogoutServlet">Odloguj se</a>
                         </li>
                         </c:if>
                         
@@ -95,11 +96,10 @@
         <div class="row">
 
             <div class="col-md-3">
-                <p class="lead">Namestaj++</p>
+                <p class="lead">Sve na jednom mestu</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Stolice</a>
-                    <a href="#" class="list-group-item">Kreveti</a>
-                    <a href="#" class="list-group-item">I tako nesto</a>
+                    <a href="lista.jsp" class="list-group-item">Namestaji</a>
+                    <a href="usluge.jsp" class="list-group-item">Usluge</a>
                 </div>
             </div>
 
@@ -116,13 +116,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img class="slide-image" src="http://localhost:9000/ProjekatWeb/img/front_image1.jpg" alt="">
+                                    <img class="slide-image" src="img/front_image1.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://localhost:9000/ProjekatWeb/img/front_image2.jpg" alt="">
+                                    <img class="slide-image" src="img/front_image2.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://localhost:9000/ProjekatWeb/img/front_image3.jpg" alt="">
+                                    <img class="slide-image" src="img/front_image3.jpg" alt="">
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">

@@ -22,7 +22,7 @@ body {
 }
 
 .caption {
-    height: 130px;
+    height: 160px;
     overflow: hidden;
 }
 
@@ -66,7 +66,6 @@ body {
 {
 	margin-bottom: 10px;
 	margin-top: 5px;
-	margin-right: 60px;
 }
 
 .panel-label
@@ -76,11 +75,37 @@ body {
 	color: black;
 }
 
+
+.panel-label-sm
+{
+	padding-top: 7px;
+	font-size: 18px;
+	color: black;
+}
+
 .korpa
 {
 	font-style: bold;
 	
 	margin-top: -10px;
+}
+
+#form label.error {
+color:red;
+}
+
+.popust
+{
+	color: red;
+}
+
+.sub_btn
+{
+	margin-top: 20px;
+}
+
+.input_error {
+border:1px solid red;
 }
 
 .top_part

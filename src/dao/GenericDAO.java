@@ -54,6 +54,7 @@ public abstract class GenericDAO<T extends Idao>
 				return;
 			}
 		}
+		db.put(bytes(novi.getId()), serialize(novi));
 		items.add(novi);
 	}
 	

@@ -83,10 +83,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                     <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                    <li>
+                        <a href="lista.jsp">Namestaji</a>
                     </li>
-                         <c:if test="${korisnik == null }">
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
+                    </li>
+                     <c:if test="${korisnik == null }">
                     <li>
                         <a href="login_test.jsp">Prijava</a>
                     </li>
@@ -94,12 +97,27 @@
                         <a href="admin_login.jsp">Admin</a>
                     </li>
                    </c:if>
-                   <c:if test="${korisnik != null }">
+                    <c:if test="${korisnik.isAdmin()}">
+                     	 <li>
+                      		 <a href="admin_panel.jsp">Panel</a>
+                   		 </li>
+                    </c:if>
+                   <c:if test="${korisnik.isUlogovan() }">
                         <li> 
-                        	<a href="LogoutServlet">Odloguj se: ${ korisnik.ime}</a>
+                        	<a href="LogoutServlet">Odloguj se</a>
                         </li>
                         </c:if>
-                </ul>
+                        
+                        </ul>
+                  
+                            <ul class="nav navbar-nav navbar-right">
+                        	<li>
+                        		<a href="korpa.jsp" class="korpa">
+                        			<img src="img/shop_cart.png"></img>
+                        		</a>
+                        	</li>
+                        </ul>
+                
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -110,14 +128,14 @@
     <div class="container">
 
        <div class="col-md-4 col-md-offset-4">
-       <h1>Kupci login</h1>
+       <h1>Admin login</h1>
     <label for="user"><h3>Korisnicko ime:</h3></label>
  
-    <input class="form-control" id="username"> 
+    <input class="form-control" id="username" required /> 
     
     <label for="user"><h3>Sifra:</h3></label>
-    <input class="form-control" type="password" id="pass"> 
-    <button class="btn btn-primary" id="sub">Submit</button>
+    <input class="form-control" type="password" id="pass" required /> 
+    <button class="btn btn-primary sub_btn" id="sub">Submit</button>
     <h4 id="valid"></h4>
     </div>
               

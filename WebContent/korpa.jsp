@@ -83,8 +83,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                          <c:if test="${korisnik == null }">
                     <li>
@@ -93,10 +96,15 @@
                     <li>
                         <a href="admin_login.jsp">Admin</a>
                     </li>
+                      <c:if test="${korisnik.isAdmin()}">
+                     	 <li>
+                      		 <a href="admin_panel.jsp">Panel</a>
+                   		 </li>
+                    </c:if>
                    </c:if>
                    <c:if test="${korisnik != null }">
                         <li> 
-                        	<a href="LogoutServlet">Odloguj se: ${ korisnik.ime}</a>
+                        	<a href="LogoutServlet">Odloguj se</a>
                         </li>
                         </c:if>
                 </ul>
@@ -132,7 +140,7 @@
       </tr>
     </thead>
     <tbody id="content">
-    <c:forEach var="item" items="${korisnik.korpa.items }">
+    <c:forEach var="item" items="${korisnik.korpa.items}">
       <tr>
         <td>${item.naziv}</td>
         <td>${item.kolicinom}</td>

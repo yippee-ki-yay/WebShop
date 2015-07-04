@@ -68,5 +68,11 @@ public class DodatneUsluge implements Serializable, Purchasable, Idao
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getKategorija() {
+		// TODO Auto-generated method stub
+		return "";
+	}
 	
 }

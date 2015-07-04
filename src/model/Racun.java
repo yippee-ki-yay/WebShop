@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import dao.Idao;
 
@@ -23,7 +24,15 @@ public class Racun implements Serializable, Idao
 	
 	public void addItem(Purchasable p, String type, String kolicina, String id)
 	{
-		items.add(new Kupovina(p.getNaziv(), p.getCena(), kolicina, p.getNazivSalona(), id));
+		System.out.println("KATEGORIJA: " + p.getKategorija());
+		
+		items.add(new Kupovina(p.getNaziv(), p.getCena(), kolicina, p.getNazivSalona(), id, p.getKategorija()));
+	}
+	
+	public boolean checkKolicina(String kolicina, Purchasable p)
+	{
+		
+		return true;
 	}
 	
 	public void removeAll()
@@ -59,6 +68,12 @@ public class Racun implements Serializable, Idao
 	public String getUkupnaCena() {
 		return ukupnaCena;
 	}
+	
+	public String getUkupnaCena(String id) 
+	{
+		//items.get(id);
+		return ukupnaCena;
+	}
 
 	public void setUkupnaCena(String ukupnaCena) {
 		this.ukupnaCena = ukupnaCena;
@@ -92,7 +107,7 @@ public class Racun implements Serializable, Idao
 	@Override
 	public String getId() 
 	{
-		return namestaj_sifra;
+		return this.datumVreme + this.ukupnaCena;
 	}
 	
 }

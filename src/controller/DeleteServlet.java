@@ -66,9 +66,18 @@ public class DeleteServlet extends HttpServlet {
 		}
 		else
 		{
-			if(tipoviNamestaja.remove(sifra))
+			boolean has = tipoviNamestaja.hasNamestaj(namestaji.getItems(), sifra);
+			
+			
+			if(has)
 			{
-				pw.print("success");
+				if(tipoviNamestaja.remove(sifra))
+				{
+					tipoviNamestaja.updateKategorije(sifra);
+					pw.print("success");
+				}
+				else
+					pw.print("fail");
 			}
 			else
 			{

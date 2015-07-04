@@ -37,6 +37,29 @@ public class TipNamestajaDAO extends GenericDAO<KategorijaNamestaja>
 		}*/
 	}
 	
+	public boolean hasNamestaj(ArrayList<KomadNamestaja> lista, String kategorija)
+	{
+		for(KomadNamestaja n : lista)
+		{
+			if(n.getKategorija().equals(kategorija))
+				return false;
+		}
+		
+		return true;
+	}
+	
+	//ako brisemo ovu nasu npr. stolicu, svuda kome je stolica nadlezna moramo nulirati
+	public void updateKategorije(String sifra)
+	{
+		for(KategorijaNamestaja k : items)
+		{
+			if(k.getPodkategrija().equals(sifra))
+			{
+				k.setPodkategrija("");
+			}
+		}
+	}
+	
 	private void addData()
 	{
 		items.add(new KategorijaNamestaja("kreveti", "legnes na njih da spavas", "null"));

@@ -42,13 +42,9 @@ public class AddUsluguServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PrintWriter pw = response.getWriter();
-		
 		String jsonUsluga = request.getParameter("u");
 		
 		ObjectMapper mapper = new ObjectMapper();
-		
-		System.out.println(jsonUsluga);
 		
 		DodatneUsluge usluga = mapper.readValue(jsonUsluga, DodatneUsluge.class);
 		
@@ -56,9 +52,7 @@ public class AddUsluguServlet extends HttpServlet {
 		
 		usluge.add(usluga);
 		
-		//getServletContext().setAttribute("usluge", usluga);
-		
-		pw.print("success");
+		response.getWriter().print("success");
 	}
 
 }

@@ -10,15 +10,17 @@ public class Kupovina implements Serializable
 	private String kolicinom;
 	private String naziv_salona;
 	private String sifra;
+	private String kategorija;
 	
 	public Kupovina(String naziv_namestaja, String cenom, String kolicinom,
-			String naziv_salona, String sifra) {
+			String naziv_salona, String sifra, String kategorija) {
 		super();
 		this.naziv = naziv_namestaja;
 		this.cenom = cenom;
 		this.kolicinom = kolicinom;
 		this.naziv_salona = naziv_salona;
 		this.sifra = sifra;
+		this.kategorija = kategorija;
 	}
 	public synchronized String getNaziv() {
 		return naziv;
@@ -49,6 +51,12 @@ public class Kupovina implements Serializable
 	}
 	public void setSifra(String sifra) {
 		this.sifra = sifra;
+	}
+	public String getKategorija() {
+		return kategorija;
+	}
+	public void setKategorija(String kategorija) {
+		this.kategorija = kategorija;
 	}
 	
 }

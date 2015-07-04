@@ -59,19 +59,36 @@ public class KupovinaServlet extends HttpServlet {
 			return;
 		}
 		
+		if(trenutni.isAdminOrManadzer() == true)
+		{
+			response.getWriter().print("admin_manadzer");
+			return;
+		}
+		
 		if(type.equals("Namestaj"))
 		{
 			p = namestaji.findById(id);
 			
-			response.getWriter().print("success");
-			trenutni.getKorpa().addItem(p, type, kolicina, id);
-			return;
+			if(Integer.parseInt(p.getKolicina()) - Integer.parseInt(kolicina)  < 0)
+			{
+				response.getWriter().print("previse");
+				return;
+			}
+			
+			
+			//trenutni.getKorpa().checkKolicina(kolicina, p);
 		}
 		else
 		{
 			p = usluge.findById(id);
-			trenutni.getKorpa().addItem(p, type, kolicina, id);
 		}
+		
+		
+		
+		trenutni.getKorpa().addItem(p, type, kolicina, id);
+		namestaji.smanjiKolicinu(id, kolicina);
+		response.getWriter().print("success");
+		
 		
 	}
 

@@ -52,4 +52,55 @@ public class UslugeDao extends GenericDAO<DodatneUsluge>
 		}
 	}
 	
+	public String search(String text, double price_max, double price_min, boolean opis)
+	{
+		ArrayList<DodatneUsluge> tmpList = new ArrayList<DodatneUsluge>();
+		ObjectMapper objectMap = new ObjectMapper();
+		
+		for(DodatneUsluge u : items)
+		{
+			boolean condition = false;
+			
+			if(price_max != -1 && price_min != -1)
+			{	
+				double cena = Double.parseDouble(u.getCena());
+				
+				if(cena >= price_min && cena <= price_max)
+				{
+					condition = true;
+				}
+			}
+			
+		
+			if(text != "")
+			{
+				if(u.getNaziv().contains(text))
+					condition = true;
+				else
+					condition = false;
+				
+				if(opis)
+				if(u.getOpis().contains(text))
+					condition = true;
+					
+				
+				
+			}
+			
+				if(condition)
+					tmpList.add(u);
+		}
+		
+		if(tmpList.size() > 0)
+		{
+			try {
+				return objectMap.writeValueAsString(tmpList);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "";
+	}
+	
 }

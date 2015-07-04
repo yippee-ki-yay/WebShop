@@ -13,6 +13,7 @@ public class KomadNamestaja implements Serializable, Purchasable, Idao
 	private String zemljaProizvodje;
 	private String nazivProizvodjaca;
 	private String jedinicnaCena;
+	private String originalnaCena;
 	private String kolicina;
 	private String tipNamestaja; //Foreign
 	private String godinaProizvodnje;
@@ -41,6 +42,7 @@ public class KomadNamestaja implements Serializable, Purchasable, Idao
 		this.godinaProizvodnje = godinaProizvodnje;
 		this.prodajniSalon = prodajniSalon;
 		this.putanjaSlike = putanjaSlike;
+		this.originalnaCena = jedinicnaCena;
 	}
 
 
@@ -177,6 +179,26 @@ public class KomadNamestaja implements Serializable, Purchasable, Idao
 
 	public void setProcenat(String procenat) {
 		this.procenat = procenat;
+	}
+
+
+
+	@Override
+	public String getKategorija() {
+		
+		return this.tipNamestaja;
+	}
+
+
+
+	public String getOriginalnaCena() {
+		return originalnaCena;
+	}
+
+
+
+	public void setOriginalnaCena(String originalnaCena) {
+		this.originalnaCena = originalnaCena;
 	}
 	
 	

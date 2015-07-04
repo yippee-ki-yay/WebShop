@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<jsp:useBean id="saloni" class="dao.SaloniDAO" scope="application"></jsp:useBean>
-<jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
   <c:if test="${!korisnik.isAdmin()}">
@@ -65,7 +64,7 @@
     			tip.opis = $("#opis").val();
     			tip.podkategrija = $("#podkategorija").val();
     			
-    			if(tip.naziv == "" || tip.opis == "" || tip.podkategrija == "")
+    			if(tip.naziv == "" || tip.opis == "")
     			{
     				$("#valid").text("Fill all the fields");
     				return;
@@ -106,8 +105,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                      <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -145,6 +147,7 @@
   			
   			 <label for="user">Podkategorija:</label>
       		 <select class="form-control" name="tip_namestaja" id="podkategorija"> 
+      			 <option value=""></option>
     			<c:forEach var="tip" items="${tipoviNamestaja.items}">
    				 <option>${tip.naziv}</option>
     			</c:forEach>

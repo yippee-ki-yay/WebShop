@@ -2,10 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-       <jsp:useBean id="namestaji" class="dao.NamestajiDAO" scope="application"></jsp:useBean>
-       <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
         <jsp:useBean id="korisnik" class="model.Korisnik" scope="session"></jsp:useBean>
-       <jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +29,9 @@
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
      <link href="css/bootstrap-formhelpers.min.css" rel="stylesheet">
+     
+     <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
 
 </head>
 
@@ -44,11 +44,17 @@
 					var p_boja = $("#boja").val();
 					var p_godina = $("#god").val();
 					var p_drzava = $("#drzava").val();
-					var p_tip = $("#tip_namestaja").val();
+					var p_tip_namestaja = $("#tip_namestaja").val();
+					var p_tip = "namestaj";
+					
 					var p_cena_od = $("#cena_od").val();
 					var p_cena_do = $("#cena_do").val();
-					var p_kapacitet = $("#kapacitet").val();
+					var p_kapacitet_od = $("#kapacitet_od").val();
+					var p_kapacitet_do = $("#kapacitet_do").val();
 					var p_proizvodjac = $("#proizvodjac").val();
+					
+					if(p_boja === "default")
+						p_boja = "";
 					
 					$.get("SearchServlet", 
 							{naziv: p_naziv,
@@ -56,14 +62,23 @@
 							 godina: p_godina,
 							 drzava: p_drzava,
 							 tip: p_tip,
+							 tipNamestaja: p_tip_namestaja,
 							 cena_od: p_cena_od,
 							 cena_do: p_cena_do,
-							 kapacitet: p_kapacitet,
-							 proizvodjac: p_proizvodjac
+							 kapacitet_od: p_kapacitet_od,
+							 kapacitet_do: p_kapacitet_do,
+							 proizvodjac: p_proizvodjac,
 							}, 
 							function(data, status)
 							{ 
-								var namestajiList = data;
+								if(data === "")
+								{
+									toastr.info("No items match your search query");
+									$(".namestaji > .row").empty();
+									return;
+								}
+								
+								var namestajiList = $.parseJSON(data);
 								
 								$(".namestaji > .row").empty();
 								
@@ -76,7 +91,7 @@
 		
 			function namestajiHTML(value)
 			{
-				var str = '<div class="col-sm-4 col-lg-4 col-md-4">'+
+				var str = '<div class="col-sm-3 col-lg-3 col-md-3">'+
                 '<div class="thumbnail">'+
                 '<img src="http://placehold.it/320x150" alt="">'+
                 '<div class="caption">'+
@@ -111,12 +126,20 @@
 				{
 					if(data === "success")
 					{
-						alert("uspesno kupio");
+						toastr.success("Artikal je dodat u korpu");
 						 $(this).prev().val("1");
 					}
 					else if(data === "nije_registrovan")
 					{
-						alert("morate se registrovati da kupite nesto");
+						toastr.info("morate biti korisnik da mozete izvrsiti kupovinu");
+					}
+					else if(data === "admin_manadzer")
+					{
+						toastr.info("Admin/Manadzer nalozima je zabranjena kupovina");
+					}
+					else if(data === "previse")
+					{
+						toastr.error("Nema dovoljno proizvoda na lageru");
 					}
 				});
 		
@@ -141,7 +164,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                     <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -151,11 +177,17 @@
                         <a href="admin_login.jsp">Admin</a>
                     </li>
                     </c:if>
+                      <c:if test="${korisnik.isAdmin()}">
+                     	 <li>
+                      		 <a href="admin_panel.jsp">Panel</a>
+                   		 </li>
+                    </c:if>
                      <c:if test="${korisnik.isUlogovan() }">
                         <li> 
                         	<a href="LogoutServlet">Odloguj se</a>
                         </li>
                       </c:if>
+                      
                 </ul>
                 
                     <ul class="nav navbar-nav navbar-right">
@@ -193,7 +225,7 @@
         
            <div class="col-md-2">
           		<select class="form-control" id="boja">
-          			<option value="default"></option>
+          			<option value=""></option>
           			<option>Black</option>
     				<option>White</option>
     				<option>Blue</option>
@@ -224,7 +256,7 @@
         
            <div class="col-md-2">
              <select class="form-control" id="tip_namestaja"> 
-             	<option value="default"></option>
+             	<option value=""></option>
     			<c:forEach var="tip" items="${tipoviNamestaja.items}">
     				<option>${tip.naziv}</option>
     			</c:forEach>
@@ -250,11 +282,19 @@
          		 </div>
          		 
          		 <div class="col-md-1">
-        			<label>Kapacitet: </label>
+        			<label>Kapacitet od: </label>
         		</div>
         		
         		<div class="col-md-1">
-          			<input type="text" class="form-control" id="kapacitet">
+          			<input type="text" class="form-control" id="kapacitet_od">
+         		 </div>
+         		 
+         		 	 <div class="col-md-1">
+        			<label>Do: </label>
+        		</div>
+        		
+        		<div class="col-md-1">
+          			<input type="text" class="form-control" id="kapacitet_do">
          		 </div>
          		 
          		 <div class="col-md-1">
@@ -285,6 +325,7 @@
                                 <p>Proizvodjac: ${n.nazivProizvodjaca}</p>
                                 <p>Zemlja porekla: ${n.zemljaProizvodje }</p>
                                 <p>Naziv proizvodjaca: ${n.nazivProizvodjaca }</p>
+                                <p>Na lageru: ${n.kolicina }</p>
                             </div>
                        
         					 <p>

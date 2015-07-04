@@ -2,7 +2,6 @@
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-  	  <jsp:useBean id="racuni" class="dao.RacuniDAO" scope="application"></jsp:useBean>
        
           <c:if test="${!korisnik.isAdmin()}">
      	<c:redirect url="index.jsp"></c:redirect>
@@ -28,7 +27,8 @@
     
     <script src="js/bootstrap-formhelpers.min.js"></script>
     
-    
+        <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
@@ -65,45 +65,58 @@
 		
 		var opseg = daydiff(start_date, end_date);
 		
-		tabeleHTML(start_date, end_date, opseg);
+		if(opseg <= 0)
+		{
+			toastr.error("Krajnji datum mora biti veci od pocetnog");
+			return;
+		}
+		
+		$.post("IzvestajServlet", 
+				{startDate:$('#start_date').val(),
+				 endDate:$('#end_date').val(),
+				 op: opseg
+				},
+			function(data, status)
+			{
+					var tabele = $.parseJSON(data);
+					
+					$(".podaci").empty();
+					
+					$.each(tabele, function(index, value)
+    				{
+						
+						var str = '<h3>'+ value.salon+ '</h3><table class="table table-striped">'+
+					    '<thead>'+
+					      '<tr>'+
+					        '<th>Datum</th>'+
+					        '<th>Zarada</th>'+
+					      '</tr>'+
+					     '</thead>'+
+					     '<tbody>';
+					     
+					     var ukupna_zarada = 0;
+					     
+					     $.each(value.mapa, function(index, v)
+				    	 {
+					    	 str += '<tr>';
+					    	 str += '<td>' + index +'</td>';
+					    	 str += '<td>' + v +'</td>';
+					    	 str += '</tr>';
+					    	 ukupna_zarada += parseInt(v);
+				    	 });
+					     
+						str += '</tbody></table>';
+						str += '<h2>Ukupna zarada: ' + ukupna_zarada + '</h2>';
+						
+						$(".podaci").append(str);
+						
+    				});
+			});
+		
 		
 	});
 	
-	function addDays(date, days) {
-	    var result = new Date(date);
-	    console.log(result.getDate());
-	    result.setDate(result.getDate() + days);
-	    return result;
-	}
-	
-	function formatDate(date) {
-	    return date.getDate() + '-' + (date.getMonth()) + '-' + date.getFullYear();
-	}
-	
-	function tabeleHTML(start_date, end_date, opseg)
-	{
-		var str = '<table class="table table-striped">'+
-	    '<thead>'+
-	      '<tr>'+
-	        '<th>Datum</th>'+
-	        '<th>Zarada</th>'+
-	      '</tr>'+
-	     '</thead>'+
-	     '<tbody>';
-	     
-	     for(var i = 0; i <= opseg; ++i)
-	     {
-	    	 str += '<tr>';
-	    	 str += '<td>' + formatDate(addDays(start_date, i)) +'</td>';
-	    	 str += '<td>' + 100 +'</td>';
-	    	 str += '</tr>';
-	     }
-	     
-	    str += '</tbody></table>';
-	    
-	    $(".podaci").append(str);
-	    	        
-	}
+
 	
 </script>
 
@@ -124,8 +137,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                     <li>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                     <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -164,7 +180,7 @@
          
              
          
-        <div class="col-md-1 panel-label">
+        <div class="col-md-1 col-md-offset-2 panel-label">
         	<label>Pocetak: </label>
         </div>
          <div class="col-md-2">

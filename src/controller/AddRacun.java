@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Korisnik;
+import model.Racun;
 import dao.RacuniDAO;
 
 /**
@@ -41,8 +42,12 @@ public class AddRacun extends HttpServlet {
 		RacuniDAO racuni = (RacuniDAO) getServletContext().getAttribute("racuni");
 		Korisnik k = (Korisnik) request.getSession().getAttribute("korisnik");
 		
+		k.getKorpa().setDatumVreme("01-07-2015");
+		
+		Racun r = k.getKorpa();
+		
 		racuni.add(k.getKorpa());
-		k.getKorpa().removeAll();
+		//k.getKorpa().removeAll();
 	}
 
 }

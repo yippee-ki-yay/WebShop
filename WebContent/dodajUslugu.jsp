@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<jsp:useBean id="saloni" class="dao.SaloniDAO" scope="application"></jsp:useBean>
-<jsp:useBean id="tipnamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
+
+<jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
   <c:if test="${!korisnik.isAdmin()}">
@@ -27,6 +27,8 @@
 
     <title>Prodavnica namestaja</title>
 
+	     <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
 
 
     <!-- Bootstrap Core CSS -->
@@ -73,13 +75,17 @@
     			
     			$.post("AddUsluguServlet", {u: JSON.stringify(usluga)}, function(data, status)
     			{
+    				console.log("wtf!");
+    				
     				if(data === "success")
     				{
+    				
     					window.location.replace("admin_panel.jsp");
+    					return;
     				}
     				else
     				{
-    					alert("dis is your falut");
+    					toastr.error("morate biti korisnik da mozete izvrsiti kupovinu");
     				}
     			});
     		});
@@ -107,7 +113,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                      <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -139,22 +148,24 @@
     </nav>
 
               
-    <form>
+    
    		<div class="col-md-4 col-md-offset-4">
+   		<form>
   			<label>Naziv</label>
-  			<input type="text" class="form-control" id="naziv" value="asas">
+  			<input type="text" class="form-control" id="naziv" value="asas" required />
   			
   			<label>Opis</label>
-  			<input type="text" class="form-control" id="opis">
+  			<input type="text" class="form-control" id="opis" required />
   			
   			<label>Cena</label>
-  			<input type="text" class="form-control" id="cena">
+  			<input type="text" class="form-control" id="cena" required />
   			
     		<button class="btn btn-primary" id="sub">Dodaj</button>
-    		
+    		</form>
     		<h4 id="valid"></h4>
+    		
     	</div>
-    </form>
+    
    
 
 

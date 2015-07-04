@@ -3,11 +3,7 @@
     
      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
      
-     <jsp:useBean id="usluge" class="dao.UslugeDao" scope="application"></jsp:useBean>
-     <jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
-     <jsp:useBean id="akcije" class="dao.AkcijeDAO" scope="application"></jsp:useBean>
-     
-     <c:if test="${!korisnik.isAdmin()}">
+     <c:if test="${!korisnik.isAdminOrManadzer()}">
      	<c:redirect url="index.jsp"></c:redirect>
      </c:if>
 <!DOCTYPE html>
@@ -26,6 +22,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+     <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
@@ -63,9 +62,7 @@
     			
     			if(current === "Dodatne usluge")
     			{
-    				//ako pre toga vec nismo dobavili podatke sa servera salji request
-    				if(usluge == null)
-  					{
+    				
     					$.post("UslugeServlet", function(data, status) 
     					{
     						usluge = $.parseJSON(data);
@@ -76,22 +73,12 @@
     							$('.podaci').append(uslugaHtml(value));
     						});
     					});
-  					}
-    				else
-    				{
-    					$.each(usluge, function(index, value)
-        						{
-        							$('.podaci').append(uslugaHtml(value));
-        						});
-    				}
+  				
     			}
     			else if(current === "Namestaji")
     			{
-    				//TODO: tamo je post ovde je get kakva je ovo anarhija
     				
-    				if(namestaji == null)
-    				{
-    						$.get("SearchServlet", function(data, status) 
+    						$.post("NamestajiServlet", function(data, status) 
     	    					{
     	    						namestaji = $.parseJSON(data);
     	    					
@@ -100,19 +87,12 @@
     										$('.podaci').append(namestajiHtml(value));
     								});
     	    					});
-    				}
-    				else
-    				{
-    					$.each(namestaji, function(index, value)
-								{
-										$('.podaci').append(namestajiHtml(value));
-								});
-    				}
+    				
+    			
     			}
     			else
     			{
-    				if(tipovi_namestaja == null)
-  					{
+    				
     					$.post("TipNamestajaServlet", function(data, status) 
     					{
     						tipovi_namestaja = $.parseJSON(data);
@@ -123,14 +103,8 @@
     							$('.podaci').append(tipoviNamestajaHtml(value));
     						});
     					});
-  					}
-    				else
-    				{
-    					$.each(tipovi_namestaja, function(index, value)
-        						{
-        							$('.podaci').append(tipoviNamestajaHtml(value));
-        						});
-    				}
+  					
+    			
     			}
     		});
     		
@@ -159,13 +133,13 @@
 			{
     			var popust = "";
     			if(value.procenat != 0)
-    				popust = "Na popustu! : "
+    				popust = "Popust : "
     					
 				var str = '<div class="col-sm-4 col-lg-4 col-md-4" id="' + value.sifra + '">'+
                 '<div class="thumbnail">'+
                 '<img src="http://placehold.it/320x150" alt="">'+
                 '<div class="caption">'+
-                   '<h4 class="pull-right">$' + popust + value.jedinicnaCena + '</h4>'+
+                   '<h4 class="pull-right"><span class="popust">' + popust +"</span>$"+ value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
                    '</h4>'+
                    '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+
@@ -218,12 +192,12 @@
 			{
 				if(data === "success")
 				{
-					alert("uspesno obrisan");
+					toastr.success("Uspesno obrisan");
 	    			$("#" + id).remove();
 				}
 				else
 				{
-					alert("des poso");
+					toastr.error("Nije moguce obrisati! Kategorija " + id + " je povezana sa namestajima.");
 				}
 			});
     	});
@@ -263,7 +237,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                     <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -294,6 +271,7 @@
     <!-- Page Content -->
     <div class="container">
     
+    	<c:if test="${korisnik.isAdmin()}">
     	<div class="row">
     		<div class="col-md-3 col-md-offset-9 top_part">
     			<select class="form-control selekcija">
@@ -303,6 +281,7 @@
     			</select>
     		</div>
     	</div>
+    	
 
         <div class="row">
 
@@ -313,6 +292,7 @@
                     <a href="dodajTipNamestaja.jsp" class="list-group-item">Kategorija namestaja</a>
                     <a href="dodajUslugu.jsp" class="list-group-item">Dodatna usluga</a>
                 </div>
+                </c:if>
                 
                 <div class="list-group">
                 	<h4>Akcije</h4>
@@ -321,8 +301,8 @@
                 
                 <div class="list-group">
                 	<h4>Izvestaj</h4>
-                    <a href="izvestajDatumi.jsp" class="list-group-item">Po danima</a>
-                    <a href="dodajNamestaj.jsp" class="list-group-item">Po kategoriji</a>
+                    <a href="izvestajDatumi.jsp" class="list-group-item">Po salonima</a>
+                    <a href="izvestajKategorija.jsp" class="list-group-item">Po kategoriji</a>
                 </div>
             </div>
 
@@ -330,12 +310,18 @@
 
                 <div class="row podaci">
                 
+                <c:if test="${korisnik.isAdmin()}">
 				<c:forEach var="n" items="${namestaji.items}">
                     <div class="col-sm-4 col-lg-4 col-md-4 box" id="${n.sifra}">
                         <div class="thumbnail">
                             <img src="http://placehold.it/320x150" alt="">
                             <div class="caption">
-                                <h4 class="pull-right">$${n.jedinicnaCena }</h4>
+                                <h4 class="pull-right">
+                                <c:if test="${n.procenat != 0}">
+                                	<span class="popust">Popust :</span>
+                                </c:if>
+                                
+                                $${n.jedinicnaCena }</h4>
                                 <h4><a href="#">${ n.naziv}</a>
                                 </h4>
                                 <p>Proizvodjac: ${n.nazivProizvodjaca}</p>
@@ -349,7 +335,7 @@
                         </div>
                     </div>
 					</c:forEach>
-
+					</c:if>
                    
                     </div>
 

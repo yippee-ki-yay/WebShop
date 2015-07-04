@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<jsp:useBean id="saloni" class="dao.SaloniDAO" scope="application"></jsp:useBean>
- <jsp:useBean id="tipoviNamestaja" class="dao.TipNamestajaDAO" scope="application"></jsp:useBean>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
   <c:if test="${!korisnik.isAdmin()}">
@@ -93,6 +92,20 @@
 			    }
 			}*/
 			
+			 $.ajax({
+			     url: 'fileUpload',
+			     type: 'POST',
+			     data: formData,
+			     async: false,
+			     cache: false,
+			     contentType: false,
+			     enctype: 'multipart/form-data',
+			     processData: false,
+			     success: function (response) {
+			       alert(response);
+			     }
+			   });
+			
 				$.post("AddNamestajServlet", {u: JSON.stringify(namestaj)}, function(data, status) 
 				{
 					if(data === "success")
@@ -131,7 +144,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                      <li>
-                        <a href="lista.jsp">Pretrazi</a>
+                        <a href="lista.jsp">Namestaji</a>
+                    </li>
+                     <li>
+                        <a href="usluge.jsp">Usluge</a>
                     </li>
                      <c:if test="${!korisnik.isUlogovan()}">
                     <li>
@@ -158,7 +174,7 @@
         <!-- /.container -->
     </nav>
 
-              
+     <form>       
     <div class="col-md-4 col-md-offset-4">
        <label for="user">Sifra:</label>
        <input class="form-control" id="sifra"> 
@@ -208,6 +224,7 @@
     <input type="file" accept="image/*" id="slika">
     <button class="btn btn-primary" id="sub">Dodaj</button>
 	</div>
+	</form>  
 
     <!-- /.container -->
 

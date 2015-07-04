@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import model.DodatneUsluge;
 import model.KomadNamestaja;
-import static org.fusesource.leveldbjni.JniDBFactory.bytes;
 import static org.fusesource.leveldbjni.JniDBFactory.*;
 
 import org.iq80.leveldb.Options;
@@ -37,6 +37,91 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 			{
 				tmpList.add(n);
 			}
+		}
+		
+		if(tmpList.size() > 0)
+		{
+			try {
+				return objectMap.writeValueAsString(tmpList);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "";
+	}
+	
+	public String search(String text, double price_max, double price_min,
+			  String drzava, String godina, String boja, double kapacitet_min, double kapacitet_max, String proizvodjac, String tip)
+	{
+		ObjectMapper objectMap = new ObjectMapper();
+		
+		ArrayList<KomadNamestaja> tmpList = new ArrayList<KomadNamestaja>();
+		
+		for(KomadNamestaja u : items)
+		{
+			boolean condition = false;
+			
+			if(price_max != -1 && price_min != -1)
+			{	
+				double cena = Double.parseDouble(u.getCena());
+				
+				if(cena >= price_min && cena <= price_max)
+				{
+					condition = true;
+				}
+			}
+			
+			if(kapacitet_max != -1 && kapacitet_min != -1)
+			{	
+				double kapacitet = Double.parseDouble(u.getKolicina());
+				
+				if(kapacitet >= kapacitet_min && kapacitet <= kapacitet_max)
+				{
+					condition = true;
+				}
+			}
+			
+			if(boja != "")
+				if(u.getBoja().equals(boja))
+					condition = true;
+				else
+					condition = false;
+			
+			if(godina != "")
+				if(u.getGodinaProizvodnje().equals(godina))
+					condition = true;
+				else
+					condition = false;
+			
+			if(drzava != "")
+				if(u.getZemljaProizvodje().equals(drzava))
+					condition = true;
+				else
+					condition = false;
+			
+			if(proizvodjac != "")
+				if(u.getNazivProizvodjaca().equals(proizvodjac))
+					condition = true;
+				else
+					condition = false;
+			
+			if(tip != "")
+				if(u.getKategorija().equals(tip))
+					condition = true;
+				else
+					condition = false;
+		
+			if(text != "")
+			{
+				if(u.getNaziv().contains(text))
+					condition = true;
+				else
+					condition = false;	
+			}
+			
+				if(condition)
+					tmpList.add(u);
 		}
 		
 		if(tmpList.size() > 0)
@@ -92,6 +177,19 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 		}
 		
 		return "";
+	}
+	
+	public void smanjiKolicinu(String id, String kolicina)
+	{
+		for(KomadNamestaja k : items)
+		{
+			if(k.getId().equals(id))
+			{
+				k.setKolicina(Integer.toString(Integer.parseInt(k.getKolicina()) - Integer.parseInt(kolicina)));
+				db.put(bytes(k.getSifra()), serialize(k));
+				return;
+			}
+		}
 	}
 	
 	public void addData()
