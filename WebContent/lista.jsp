@@ -141,6 +141,20 @@
 					{
 						toastr.error("Nema dovoljno proizvoda na lageru");
 					}
+					else if(/^ima/.test(data))
+					{
+						toastr.success("Artikal je dodat u korpu");
+						var naziv_usluge = data.substring(3, data.length);
+						if (confirm('Uz ovaj namestaj ide i usluga '+ naziv_usluge + ' da li zelite kupiti i uslugu')) 
+						{
+							$.post("KupovinaServlet", {dodatna_usluga: naziv_usluge}, function(data, status)
+							{
+								toastr.success("Usluga je dodata u korpu");
+							});
+						} else {
+						    // Do nothing!
+						}
+					}
 				});
 		
 	});

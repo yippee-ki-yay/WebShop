@@ -50,8 +50,18 @@ public class KupovinaServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		String id = request.getParameter("sifra");
 		String kolicina = request.getParameter("kolicina");
+		String dodatna_usluga = request.getParameter("dodatna_usluga");
 		
 		Purchasable p;
+		
+		//ako hoce korisnik i dodatnu uslugu uz namestaj
+		if(dodatna_usluga != null)
+		{
+			p = usluge.findById(dodatna_usluga);
+			if(p != null)
+				trenutni.getKorpa().addItem(p, "usluga", "1", dodatna_usluga);
+			return;
+		}
 		
 		if(trenutni.isUlogovan() == false)
 		{
@@ -75,18 +85,35 @@ public class KupovinaServlet extends HttpServlet {
 				return;
 			}
 			
+			DodatneUsluge du = namestaji.checkUslugu(usluge, id);
 			
-			//trenutni.getKorpa().checkKolicina(kolicina, p);
+			if(du != null)
+			{
+				response.getWriter().print("ima" + du.getNaziv());
+				trenutni.getKorpa().addItem(p, type, kolicina, id);
+				return;
+			}
+			
+			
+			namestaji.smanjiKolicinu(id, kolicina);
+			
 		}
 		else
 		{
+			String namestaj = usluge.findById(id).getNamestaj();
+			if(namestaj != "")
+			{
+				response.getWriter().print("povezana" + namestaj);
+				return;
+			}
 			p = usluge.findById(id);
+			
 		}
 		
 		
 		
 		trenutni.getKorpa().addItem(p, type, kolicina, id);
-		namestaji.smanjiKolicinu(id, kolicina);
+
 		response.getWriter().print("success");
 		
 		

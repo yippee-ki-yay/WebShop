@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import dao.Idao;
+import dao.NamestajiDAO;
 
 @SuppressWarnings("serial")
 public class Akcija implements Serializable, Idao
@@ -13,6 +14,7 @@ public class Akcija implements Serializable, Idao
 	{
 		private String naziv;
 		private String procenat;
+		private String ime;
 		
 		public NamestajPopust(){}
 		
@@ -28,6 +30,15 @@ public class Akcija implements Serializable, Idao
 		public void setProcenat(String procenat) {
 			this.procenat = procenat;
 		}
+
+		public String getIme() {
+			return ime;
+		}
+
+		public void setIme(String ime) {
+			this.ime = ime;
+		}
+		
 		
 	}
 	
@@ -47,15 +58,17 @@ public class Akcija implements Serializable, Idao
 		this.salon = salon;
 	}
 
-	public void setPopust(ArrayList<KomadNamestaja> komadi)
+	public void setPopust(NamestajiDAO komadi)
 	
 	{
 		for(NamestajPopust popust : namestaji)
 		{
-			for(KomadNamestaja komad : komadi)
+			for(KomadNamestaja komad : komadi.getItems())
 			{
 				if(komad.getId().equals(popust.getNaziv()))
 				{
+					popust.setIme(komad.getNaziv()); //setujemo ime da mozemo lepo prikazati
+					
 					komad.setProcenat(popust.getProcenat());
 					
 					double proc = Double.parseDouble(popust.getProcenat());
@@ -64,7 +77,11 @@ public class Akcija implements Serializable, Idao
 					String novaCena = Double.toString((originalna - ((proc/100)*originalna)));
 					
 					komad.setJedinicnaCena(novaCena);
+					
+					komadi.add(komad); //ovo bi trebalo da i u bazi updejtuje nas komad
+					
 				}
+				
 			}
 		}
 	}

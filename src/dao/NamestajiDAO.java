@@ -1,12 +1,14 @@
 package dao;
 
+import static org.fusesource.leveldbjni.JniDBFactory.bytes;
+import static org.fusesource.leveldbjni.JniDBFactory.factory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import model.DodatneUsluge;
 import model.KomadNamestaja;
-import static org.fusesource.leveldbjni.JniDBFactory.*;
 
 import org.iq80.leveldb.Options;
 
@@ -192,6 +194,11 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 		}
 	}
 	
+	public void changeWithoutImage()
+	{
+		
+	}
+	
 	public void addData()
 	{
 		String kat = "stolovi";
@@ -220,6 +227,26 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public DodatneUsluge checkUslugu(UslugeDao uslugu, String id)
+	{
+		for(KomadNamestaja n : items)
+		{
+			if(n.getId().equals(id))
+			{
+				for(DodatneUsluge u : uslugu.getItems())
+				{
+					if(u.getNamestaj() != null)
+					if(u.getNamestaj().equals(n.getNaziv()))
+					{
+						return u;
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 
 }

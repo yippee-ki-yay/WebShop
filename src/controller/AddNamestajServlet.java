@@ -61,9 +61,15 @@ public class AddNamestajServlet extends HttpServlet {
 		String tip_namestaja = request.getParameter("tip_namestaja");
 		String godina = request.getParameter("godina");
 		String salon = request.getParameter("salon");
+		String ucitana_slika = request.getParameter("ucitana_slika");
+		
+		String fileName = "";
 		
 		Part filePart = request.getPart("slika");
-		String fileName = getFileName(filePart);
+		fileName = getFileName(filePart);
+		
+		
+		if(!fileName.equals("")){
 		
 		InputStream fileContent = filePart.getInputStream();
 		
@@ -74,6 +80,10 @@ public class AddNamestajServlet extends HttpServlet {
 		try (InputStream input = fileContent) {
 		    Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
+		}
+		else
+			fileName = ucitana_slika;
+		
 		
 		KomadNamestaja novi = new KomadNamestaja(sifra, naziv, boja, zemlja, proizvodjac, 
 				                   cena, kolicina, tip_namestaja, godina, salon, fileName);

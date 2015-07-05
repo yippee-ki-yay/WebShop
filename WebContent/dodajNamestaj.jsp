@@ -37,6 +37,9 @@
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
      <script src="js/bootstrap-formhelpers.min.js"></script>
+     
+     <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,25 +56,40 @@
     		$("#sifra").val(jup.sifra);
     		$("#naziv").val(jup.naziv);
     		$("#boja").val(jup.boja);
-    		$("#zemlja").val(jup.zemljaProizvodje);
+    		$("#zemlja option:selected").text(jup.zemljaProizvodje);
     		$("#proizvodjac").val(jup.nazivProizvodjaca);
     		$("#cena").val(jup.jedinicnaCena);
     		$("#kolicina").val(jup.kolicina);
     		$("#tip_namestaja").val(jup.tipNamestaja);
     		$("#godina").val(jup.godinaProizvodnje);
     		$("#salon").val(jup.prodajniSalon);
-    		$("#slika").val("");
+    		$("#ucitana_slika").val(jup.putanjaSlike);
+    		
+    		if(jup.putanjaSlike != undefined)
+    		{
+    			$(".slika").text("Slika: " + jup.putanjaSlike + " je ucitana! Mozete dole izmeniti sliku.");
+    		}
     		
     		if(jup.sifra != undefined)
     			$('#sifra').prop('readonly', true);
     		
+    		$("#otkazi_btn").click(function(e) 
+    	    {
+    	    	e.preventDefault();
+    	    	window.location.replace("admin_panel.jsp");
+    			return;
+    	    });
+    		
     		$("form").submit(function()
     		{
-    			/*if($("#sifra").val() == "")
+    			if($("#sifra").val() == "")
     			{
     				alert("Wuuut");
     				return false;
-    			}*/
+    			}
+    			
+    			if(!numberCheck($("#cena").val(), null, null, "Cena"))
+    				return false;
     		});
     		
     		/*$("#sub").click(function() 
@@ -175,8 +193,10 @@
         <!-- /.container -->
     </nav>
 
-     <form action="AddNamestajServlet" method="post" enctype="multipart/form-data">       
+        
     <div class="col-md-4 col-md-offset-4">
+    <h2>Dodavanje novog namestaja</h2>
+      <form action="AddNamestajServlet" method="post" enctype="multipart/form-data">  
        <label for="user">Sifra:</label>
        <input class="form-control" id="sifra" name="sifra" required /> 
      
@@ -216,25 +236,23 @@
     <label for="user">Prodajni salon:</label>
     
     <select class="form-control" id="salon" name="salon"> 
-    <c:forEach var="salon" items="${ saloni.items}">
+    <c:forEach var="salon" items="${saloni.items}">
     <option>${salon.naziv}</option>
     </c:forEach>
     </select>
     <label for="user" >Slika:</label>
     
-    <input type="file" accept="image/*" id="slika" name="slika" required />
-    <button class="btn btn-primary" id="sub">Dodaj</button>
+    <div class="slika"></div>
+    <input type="hidden" name="ucitana_slika" id="ucitana_slika" value="">
+    
+    <input type="file" accept="image/*" id="slika" name="slika" value="Ucitaj">
+   
+   	<button class="btn btn-primary sub_btn pull-right" id="sub">Dodaj</button>
+    <button class="btn btn-danger pull-right otkazi_btn" id="otkazi_btn">Otkazi</button>
+   
+    </form> 
 	</div>
-	</form>  
-
-    <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-    </div>
-    <!-- /.container -->
+	 
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

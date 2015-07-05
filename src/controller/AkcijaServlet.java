@@ -44,16 +44,11 @@ public class AkcijaServlet extends HttpServlet {
 		
 		String json = request.getParameter("json");
 		
-		System.out.println(json);
-		
 		Akcija a = akcije.fromJson(json);
 		
-		a.setPopust(namestaji.getItems());
+		a.setPopust(namestaji);
 			
 		akcije.add(a);
-		
-		//TODO: do i need this?
-		//getServletContext().setAttribute("namestaji", namestaji);
 		
 		//ako do ovde nije prslo sve to je uspeh good enough
 		response.getWriter().print("success");

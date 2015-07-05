@@ -122,6 +122,11 @@
 					{
 						toastr.info("Admin/Manadzer nalozima je zabranjena kupovina");
 					}
+					else if(/^povezana/.test(data))
+					{
+						var ime = data.substring(8, data.length)
+						toastr.info("Ovu uslugu mozete kupiti samo uz namestaj: " + ime);
+					}
 				});
 		
 		

@@ -40,6 +40,11 @@
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
      <script src="js/bootstrap-formhelpers.min.js"></script>
+     
+      <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
+
+	 <script src="js/error_check.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,18 +65,31 @@
     		if(jup.naziv != undefined)
     			$('#naziv').prop('readonly', true);
     		
-    		$("#sub").click(function() 
+    		$("#otkazi_btn").click(function(e) 
+    	    {
+    			e.preventDefault();
+    			window.location.replace("admin_panel.jsp");
+				return;
+    	    });
+    		
+    		$("#sub_btn").click(function(e) 
     		{
+    			e.preventDefault();
+    			
     			var usluga = {};
     			usluga.naziv = $("#naziv").val();
     			usluga.opis = $("#opis").val();
     			usluga.cena = $("#cena").val();
+    			usluga.namestaj = $("#namestaji").val();
     			
     			if(usluga.naziv == "" || usluga.opis == "" || usluga.cena == "")
     			{
-    				$("#valid").text("Fill all the fields");
+    				toastr.error("Morate popuniti sva polja");
     				return;
     			}
+    			
+    			if(!numberCheck(usluga.cena, null, null, "Cena"))
+    				return;
     			
     			$.post("AddUsluguServlet", {u: JSON.stringify(usluga)}, function(data, status)
     			{
@@ -136,10 +154,6 @@
                         	<a href="LogoutServlet">Odloguj se</a>
                         </li>
                       </c:if>
-                      
-                      <li>
-                      	<a href="">${ param['id']}</a>
-                      </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -147,10 +161,13 @@
         <!-- /.container -->
     </nav>
 
-              
-    
+      
+               
+             
+    <form>
    		<div class="col-md-4 col-md-offset-4">
-   		<form>
+   		<h1>Dodavanje nove usluge</h1>
+   		
   			<label>Naziv</label>
   			<input type="text" class="form-control" id="naziv" value="asas" required />
   			
@@ -160,23 +177,21 @@
   			<label>Cena</label>
   			<input type="text" class="form-control" id="cena" required />
   			
-    		<button class="btn btn-primary" id="sub">Dodaj</button>
-    		</form>
+  			 <label for="user">Za odredjen namestaj (opciono)</label>
+       		<select class="form-control" id="namestaji" name="namestaji"> 
+       		<option value=""></option>
+    		<c:forEach var="n" items="${namestaji.items}">
+    			<option>${n.naziv}</option>
+    		</c:forEach>
+    		</select>
+  			
+    		<button class="btn btn-primary pull-right sub_btn" id="sub_btn">Dodaj</button>
+    		<button class="btn btn-danger pull-right otkazi_btn" id="otkazi_btn">Otkazi</button>
+    		
     		<h4 id="valid"></h4>
     		
     	</div>
-    
-   
-
-
-    <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-    </div>
-    <!-- /.container -->
+    </form>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

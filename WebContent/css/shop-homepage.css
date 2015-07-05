@@ -104,6 +104,12 @@ color:red;
 	margin-top: 20px;
 }
 
+.otkazi_btn
+{
+	margin-top: 20px;
+	margin-right: 30px;
+}
+
 .input_error {
 border:1px solid red;
 }

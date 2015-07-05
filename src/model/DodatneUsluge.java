@@ -11,6 +11,8 @@ public class DodatneUsluge implements Serializable, Purchasable, Idao
 	private String opis;
 	private String cena;
 	
+	private String namestaj;
+	
 	public DodatneUsluge(){}
 
 	public DodatneUsluge(String naziv, String opis, String cena) {
@@ -73,6 +75,14 @@ public class DodatneUsluge implements Serializable, Purchasable, Idao
 	public String getKategorija() {
 		// TODO Auto-generated method stub
 		return "";
+	}
+
+	public String getNamestaj() {
+		return namestaj;
+	}
+
+	public void setNamestaj(String namestaj) {
+		this.namestaj = namestaj;
 	}
 	
 }

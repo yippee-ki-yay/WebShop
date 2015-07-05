@@ -297,6 +297,7 @@
                 <div class="list-group">
                 	<h4>Akcije</h4>
                     <a href="novaAkcija.jsp" class="list-group-item">Nova akcija</a>
+                    <a href="prikazAkcija.jsp" class="list-group-item">Prikaz akcija</a>
                 </div>
                 
                 <div class="list-group">
@@ -317,9 +318,10 @@
                              <img src="img/${n.putanjaSlike } " alt="">
                             <div class="caption">
                                 <h4 class="pull-right">
-                                <c:if test="${n.procenat != 0}">
+                             <%--    <c:if test="${n.procenat == ''}">
                                 	<span class="popust">Popust :</span>
                                 </c:if>
+                                --%>
                                 
                                 $${n.jedinicnaCena }</h4>
                                 <h4><a href="#">${ n.naziv}</a>

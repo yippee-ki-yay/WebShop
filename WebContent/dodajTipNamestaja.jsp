@@ -37,6 +37,9 @@
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
      <script src="js/bootstrap-formhelpers.min.js"></script>
+     
+      <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,8 +60,18 @@
     		if(jup.naziv != undefined)
     			$('#naziv').prop('readonly', true);
     		
-    		$("#sub").click(function() 
+    		$("#otkazi_btn").click(function(e) 
+    	    {
+    	    			e.preventDefault();
+    	    			window.location.replace("admin_panel.jsp");
+    					return;
+    	    });
+    		
+    		$("#sub").click(function(e) 
     		{
+    			
+    			 e.preventDefault();
+    			
     			var tip = {};
     			tip.naziv = $("#naziv").val();
     			tip.opis = $("#opis").val();
@@ -66,7 +79,7 @@
     			
     			if(tip.naziv == "" || tip.opis == "")
     			{
-    				$("#valid").text("Fill all the fields");
+    				toastr.error("Morate popuniti sva polja");
     				return;
     			}
     			
@@ -137,8 +150,10 @@
     </nav>
 
               
-    <form>
+    
    		<div class="col-md-4 col-md-offset-4">
+   		<h2>Dodavanje nove kategorije</h2>
+   		<form>
   			<label>Naziv</label>
   			<input type="text" class="form-control" id="naziv">
   			
@@ -146,29 +161,20 @@
   			<input type="text" class="form-control" id="opis">
   			
   			 <label for="user">Podkategorija:</label>
-      		 <select class="form-control" name="tip_namestaja" id="podkategorija"> 
+      		 <select class="form-control" id="podkategorija"> 
       			 <option value=""></option>
     			<c:forEach var="tip" items="${tipoviNamestaja.items}">
    				 <option>${tip.naziv}</option>
     			</c:forEach>
     		 </select>
   			
-    		<button class="btn btn-primary" id="sub">Dodaj</button>
+    		<button class="btn btn-primary sub_btn pull-right" id="sub">Dodaj</button>
+    		<button class="btn btn-danger pull-right otkazi_btn" id="otkazi_btn">Otkazi</button>
     		
     		<h4 id="valid"></h4>
+    		 </form>
     	</div>
-    </form>
    
-
-
-    <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-    </div>
-    <!-- /.container -->
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

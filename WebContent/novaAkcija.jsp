@@ -3,7 +3,7 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
        
-          <c:if test="${!korisnik.isAdmin()}">
+          <c:if test="${!korisnik.isAdminOrManadzer()}">
      	<c:redirect url="index.jsp"></c:redirect>
      </c:if>
     
@@ -27,6 +27,8 @@
     
     <script src="js/bootstrap-formhelpers.min.js"></script>
     
+     <link href="css/toastr.css" rel="stylesheet"/>
+     <script src="js/toastr.js"></script>
     
 
     <!-- Custom CSS -->
@@ -85,7 +87,15 @@
 		
 			}
 			else
+			{
 				$(".podaci").empty();
+				
+				//prodji kroz sve podatke i generi html
+				$.each(namestaji, function(index, value)
+				{
+					$('.podaci').append(namestajiHtml(value));
+				});
+			}
 			
 		});
 		
@@ -94,8 +104,33 @@
 			var akcija = {}
 			akcija.startDate = "";
 			akcija.endDate = "";
-			akcija.salon = "";
+			akcija.salon = $("#saloni").val();
 			akcija.namestaji = [];
+			
+			function parseDate(str) 
+			{
+			    var mdy = str.split('-')
+			    return new Date(mdy[2], mdy[1], mdy[0]);
+			}
+			
+			function daydiff(first, second) 
+			{
+			    return (second-first)/(1000*60*60*24);
+			}
+			
+			var start_date = parseDate($('#start_date').val());
+			var end_date = parseDate($('#end_date').val());
+			
+			akcija.startDate = $('#start_date').val();
+			akcija.endDate = $('#end_date').val();
+			
+			var opseg = daydiff(start_date, end_date);
+			
+			if(opseg <= 0)
+			{
+				toastr.error("Krajnji datum mora biti veci od pocetnog");
+				return;
+			}
 			
 			$(".namestaj").each(function() 
 			{
@@ -107,6 +142,7 @@
 					item = {}
 			        item ["naziv"] = sifra;
 			        item ["procenat"] = popust;
+			        item["ime"] = "";
 					akcija.namestaji.push(item);
 				}
 			});
@@ -124,6 +160,7 @@
 								item = {}
 						        item ["naziv"] = value.sifra;
 						        item ["procenat"] = popust;
+						        item["ime"] = "";
 								akcija.namestaji.push(item);
 							}
 						});
@@ -173,7 +210,7 @@
     				podkategorija = value.podkategrija;
     			
     			
-    			var str = '<div class="col-sm-4 col-lg-4 col-md-4" id="'+value.naziv + '">' +
+    			var str = '<div class="col-sm-3 col-lg-3 col-md-3" id="'+value.naziv + '">' +
    			 	'<div class="thumbnail">'+
                '<div class="caption">'+
                    '<h4><a href="#">'+ value.naziv +'</a>'+
@@ -278,13 +315,13 @@
         	<label>Pocetak: </label>
         </div>
          <div class="col-md-2">
-         	<div class="bfh-datepicker"></div>
+         	<div class="bfh-datepicker" data-format="d-m-y" id="start_date"></div>
          </div>
          <div class="col-md-1 panel-label">
         	<label>Kraj: </label>
         </div>
          <div class="col-md-2">
-          	<div class="bfh-datepicker"></div>
+          	<div class="bfh-datepicker" data-format="d-m-y" id="end_date"></div>
          </div>
          <div class="col-md-1">
   			<button class="btn btn-primary" id="dodaj">Dodaj</button>
