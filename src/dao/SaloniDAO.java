@@ -22,11 +22,11 @@ public class SaloniDAO extends GenericDAO<Salon>
 	
 	public SaloniDAO()
 	{
-		//openDb("saloni");
+		openDb("saloni");
 		
-		addData();
+		//addData();
 		
-		//readFile();
+		readFile();
 	}
 	
 	private void addData()

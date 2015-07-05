@@ -61,7 +61,6 @@ public class AdminLoginServlet extends HttpServlet {
 			//postavi u session naseg korisnika
 			request.getSession().setAttribute("korisnik", k);
 			pw.print("success");
-			System.out.println("PRINT");
 		}
 		else
 		{

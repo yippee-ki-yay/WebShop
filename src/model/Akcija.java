@@ -1,7 +1,10 @@
 package model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import dao.Idao;
 import dao.NamestajiDAO;
@@ -46,6 +49,7 @@ public class Akcija implements Serializable, Idao
 	private String startDate;
 	private String endDate;
 	private String salon;
+	private String id = UUID.randomUUID().toString();
 	
 	public Akcija(){}
 	
@@ -74,7 +78,11 @@ public class Akcija implements Serializable, Idao
 					double proc = Double.parseDouble(popust.getProcenat());
 					double originalna = Double.parseDouble(komad.getJedinicnaCena());
 					
-					String novaCena = Double.toString((originalna - ((proc/100)*originalna)));
+					double novaCenaDouble = (originalna - ((proc/100)*originalna));
+					
+					NumberFormat formatter = new DecimalFormat("#0.00");  
+					
+					String novaCena = formatter.format(novaCenaDouble).toString();
 					
 					komad.setJedinicnaCena(novaCena);
 					
@@ -152,8 +160,8 @@ public class Akcija implements Serializable, Idao
 
 	@Override
 	public String getId() {
-		// TODO FIX this shit
-		return startDate+endDate;
+	
+		return id;
 	}
 	
 	

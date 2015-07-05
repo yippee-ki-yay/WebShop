@@ -7,61 +7,17 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Prijava admina</title>
 
-    <title>Prodavnica namestaja</title>
+    <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core CSS -->
+    <script src="js/bootstrap.min.js"></script>
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <script>
-    	$(document).ready(function()
-    	{
-    		$("#sub").click(function()
-    		{
-    			var $user = $("#username").val();
-    			var $pass = $("#pass").val();
-    			
-    			if($user == "" || $pass == "")
-    			{
-    				$("#valid").text("Fill out all the fields");
-    				return;
-    			}
-    			
-    			$.post( "AdminLoginServlet", 
-    					{
-    						user: $user,
-    						pass: $pass
-    					}, 
-    					function( data ) 
-    					{
-    						if(data == "fail")
-    						{
-    							$("#valid").text("Wrong user/pass");
-    							return;
-    						}
-    							
-    						window.location.replace("admin_panel.jsp");
-    					});
-    		});	
-    	});
-    </script>
+	 <script src="js/webshop/admin_login.js"></script>
 
 </head>
 
@@ -91,10 +47,13 @@
                     </li>
                      <c:if test="${korisnik == null }">
                     <li>
-                        <a href="login_test.jsp">Prijava</a>
+                        <a href="login_test.jsp">Korisnik</a>
                     </li>
                     <li>
                         <a href="admin_login.jsp">Admin</a>
+                    </li>
+                     <li>
+                        <a href="manadzer_login.jsp">Manadzer</a>
                     </li>
                    </c:if>
                     <c:if test="${korisnik.isAdmin()}">
@@ -140,22 +99,6 @@
     </div>
               
             </div>
-
-
-    <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 

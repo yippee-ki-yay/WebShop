@@ -24,7 +24,15 @@ public class Racun implements Serializable, Idao
 	
 	public void addItem(Purchasable p, String type, String kolicina, String id)
 	{
-		System.out.println("KATEGORIJA: " + p.getKategorija());
+		for(Kupovina k : items)
+		{
+			if(k.getSifra().equals(id))
+			{
+				k.setKolicinom(Integer.toString(Integer.parseInt(k.getKolicinom()) + Integer.parseInt(kolicina)));
+				k.setCenom((Integer.toString(Integer.parseInt(k.getCenom()) + Integer.parseInt(p.getCena()))));
+				return;
+			}
+		}
 		
 		items.add(new Kupovina(p.getNaziv(), p.getCena(), kolicina, p.getNazivSalona(), id, p.getKategorija()));
 	}

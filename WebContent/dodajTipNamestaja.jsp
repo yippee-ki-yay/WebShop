@@ -18,17 +18,11 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Dodaj tip namestaja</title>
 
-    <title>Prodavnica namestaja</title>
+    <script src="js/jquery.js"></script>
 
-
-
-    <!-- Bootstrap Core CSS -->
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -40,63 +34,91 @@
      
       <link href="css/toastr.css" rel="stylesheet"/>
      <script src="js/toastr.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <script>
+     <!--   <script src="js/webshop/dodajTipNamestaja.js"></script>-->
+     
+     <script>
     	$(document).ready(function()
-    	{
-			var jup = new Object(${trenutni});
-    		
-    		$("#naziv").val(jup.naziv);
-    		$("#opis").val(jup.opis);
-    		$("#podkategorija").val(jup.podkategrija);
-    		
-    		if(jup.naziv != undefined)
-    			$('#naziv').prop('readonly', true);
-    		
-    		$("#otkazi_btn").click(function(e) 
-    	    {
-    	    			e.preventDefault();
-    	    			window.location.replace("admin_panel.jsp");
-    					return;
-    	    });
-    		
-    		$("#sub").click(function(e) 
-    		{
-    			
-    			 e.preventDefault();
-    			
-    			var tip = {};
-    			tip.naziv = $("#naziv").val();
-    			tip.opis = $("#opis").val();
-    			tip.podkategrija = $("#podkategorija").val();
-    			
-    			if(tip.naziv == "" || tip.opis == "")
-    			{
-    				toastr.error("Morate popuniti sva polja");
-    				return;
-    			}
-    			
-    			$.post("AddTipNamestajaServlet", {u: JSON.stringify(tip)}, function(data, status)
-    			{
-    				if(data === "success")
-    				{
-    					window.location.replace("admin_panel.jsp");
-    				}
-    				else
-    				{
-    					alert("dis is your falut");
-    				}
-    			});
-    		});
-    	});
-    </script>
+    	    	{
+    				var jup = new Object(${trenutni});
+    				var izmena = false;
+    	    		
+    	    		$("#naziv").val(jup.naziv);
+    	    		$("#opis").val(jup.opis);
+    	    		$("#podkategorija").val(jup.podkategrija);
+    	    		
+    	    		if(jup.naziv != undefined)
+    	    		{
+    	    			$('#naziv').prop('readonly', true);
+    	    			izmena = true;
+    	    		}
+    	    		
+    	    		$("#otkazi_btn").click(function(e) 
+    	    	    {
+    	    	    			e.preventDefault();
+    	    	    			window.location.replace("admin_panel.jsp");
+    	    					return;
+    	    	    });
+    	    		
+    	    		$("#naziv").blur(function()
+    	    	    {
+    	    	    	if(!izmena)
+    	    	    	{
+    	    	    		if($("#naziv").val() == "")
+    	    	    		{
+    	    	    			toastr.error("Morate uneti naziv kategorije/tipa");
+    	    	    			return;
+    	    	    		}
+    	    	    			
+    	    	    		$.post("CheckUniqueServlet", {tip:"kategorija", id:$("#naziv").val()}, function(data, status)
+    	    	    		{
+    	    	    			if(data === "not_unique")
+    	    	    			{
+    	    	    					toastr.error("Naziv nije jednistven, unesite neki drugi naziv");
+    	    	    					$("#naziv").focus();
+    	    	    			}
+    	    	    		});
+    	    	    	}
+    	    	    });
+    	    		
+    	    		$("#sub").click(function(e) 
+    	    		{
+    	    			
+    	    			 e.preventDefault();
+    	    			
+    	    			var tip = {};
+    	    			tip.naziv = $("#naziv").val();
+    	    			tip.opis = $("#opis").val();
+    	    			tip.podkategrija = $("#podkategorija").val();
+    	    			
+    	    			if(tip.naziv == "")
+    	    			{
+    	    				toastr.error("Morate popuniti naziv");
+    	    				$("#naziv").focus();
+    	    				return;
+    	    			}
+    	    			
+    	    			if(tip.opis == "")
+    	    			{
+    	    				toastr.error("Morate popuniti opis");
+    	    				$("#opis").focus();
+    	    				return;
+    	    			}
+    	    			
+    	    			$.post("AddTipNamestajaServlet", {u: JSON.stringify(tip)}, function(data, status)
+    	    			{
+    	    				if(data === "success")
+    	    				{
+    	    					window.location.replace("admin_panel.jsp");
+    	    				}
+    	    				else
+    	    				{
+    	    					alert("dis is your falut");
+    	    				}
+    	    			});
+    	    		});
+    	    	});
+     
+     </script>
 
 </head>
 
@@ -160,7 +182,7 @@
   			<label>Opis</label>
   			<input type="text" class="form-control" id="opis">
   			
-  			 <label for="user">Podkategorija:</label>
+  			 <label for="user">Podkategorija: (Opciono)</label>
       		 <select class="form-control" id="podkategorija"> 
       			 <option value=""></option>
     			<c:forEach var="tip" items="${tipoviNamestaja.items}">
@@ -174,13 +196,6 @@
     		<h4 id="valid"></h4>
     		 </form>
     	</div>
-   
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 

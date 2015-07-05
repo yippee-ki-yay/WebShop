@@ -1,11 +1,6 @@
-/*!
- * Start Bootstrap - Shop Homepage HTML Template (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
 
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 70px; 
 }
 
 .slide-image {
@@ -26,7 +21,16 @@ body {
     overflow: hidden;
 }
 
+.caption_usluge {
+    height: 120px;
+    overflow: hidden;
+}
+
 .caption h4 {
+    white-space: nowrap;
+}
+
+.caption_usluge h4 {
     white-space: nowrap;
 }
 
@@ -52,6 +56,11 @@ body {
 .thumbnail .caption-full {
     padding: 9px;
     color: #333;
+}
+
+.usluga_btn
+{
+	margin-bottom: 10px;
 }
 
 .box_selected

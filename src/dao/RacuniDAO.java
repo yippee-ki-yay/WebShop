@@ -21,7 +21,7 @@ public class RacuniDAO extends GenericDAO<Racun>
 	{
 		openDb("racuni");
 		
-		//readFile();
+		readFile();
 	}
 	
 	private void addData()
@@ -135,7 +135,7 @@ public class RacuniDAO extends GenericDAO<Racun>
 	//prikaz racuna da vidimo da li su podaci ok
 	public void racuniTrenutni()
 	{
-		System.out.println("Koliko imamo racuna u memoriji: " + items.size());
+		/*System.out.println("Koliko imamo racuna u memoriji: " + items.size());
 		
 		for(Racun r : items)
 		{
@@ -147,7 +147,7 @@ public class RacuniDAO extends GenericDAO<Racun>
 			}
 			
 			
-		}
+		}*/
 	}
 	
 	public synchronized String poKategorijama(Date startDate, Date endDate, int opseg, String kategorija, TipNamestajaDAO tipovi)

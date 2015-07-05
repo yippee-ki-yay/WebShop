@@ -20,11 +20,11 @@ public class UslugeDao extends GenericDAO<DodatneUsluge>
 	
 	public UslugeDao()
 	{
-		//openDb("usluge");
+		openDb("usluge");
 		
-		addData();
+		//addData();
 		
-		//readFile();
+		readFile();
 	}
 	
 	

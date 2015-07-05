@@ -22,13 +22,14 @@ public class TipNamestajaDAO extends GenericDAO<KategorijaNamestaja>
 	
 	public TipNamestajaDAO()
 	{
-		//openDb("tipnamestaja");
+		openDb("tipnamestaja");
 		
-		addData();
+		//addData();
 		
-		//readFile();
+		readFile();
 	}
 
+	//deprecated
 	public void getKategorijeSalona(String salon)
 	{
 		/*for(KategorijaNamestaja k : items)

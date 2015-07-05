@@ -12,18 +12,12 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Prikaz akcija</title>
 
-    <title>Prodavnica namestaja</title>
+    <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core CSS -->
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <script src="js/bootstrap-formhelpers.min.js"></script>
     
@@ -36,13 +30,6 @@
      <link href="css/bootstrap-formhelpers.min.css" rel="stylesheet">
 
 </head>
-
-<script>
-	$(document).ready(function()
-	{
-	
-	});
-</script>
 
 <body>
     <!-- Navigation -->
@@ -75,12 +62,7 @@
                         <a href="admin_login.jsp">Admin</a>
                     </li>
                     </c:if>
-                    <c:if test="${korisnik.isAdmin()}">
-                     	 <li>
-                      		 <a href="admin_panel.jsp">Panel</a>
-                   		 </li>
-                    </c:if>
-                      <c:if test="${korisnik.isAdmin()}">
+                    <c:if test="${korisnik.isAdminOrManadzer()}">
                      	 <li>
                       		 <a href="admin_panel.jsp">Panel</a>
                    		 </li>
@@ -148,13 +130,6 @@
     	</div>
     </div>  
 
-
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 

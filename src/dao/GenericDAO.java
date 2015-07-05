@@ -25,11 +25,6 @@ public abstract class GenericDAO<T extends Idao>
 	protected ArrayList<T> items = new ArrayList<T>();
 	protected DB db;
 	
-	public synchronized void save()
-	{
-		
-	}
-	
 	public synchronized void openDb(String dbName)
 	{
 		Options options = new Options();
@@ -108,6 +103,8 @@ public abstract class GenericDAO<T extends Idao>
 	public void readFile()
 	{
 		DBIterator iterator = db.iterator();
+		if(iterator == null)return;
+		
 		try {
 		  for(iterator.seekToFirst(); iterator.hasNext(); iterator.next()) {
 			 

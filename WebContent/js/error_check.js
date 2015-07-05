@@ -25,7 +25,7 @@ function numberCheck(num, min, max, msg)
 	}
 	else if(c > max)
 	{
-		toastr.error(msg + " mora manja od " + max);
+		toastr.error(msg + " mora manja ili jednaka od " + max);
 		return false;
 	}
 	

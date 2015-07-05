@@ -18,129 +18,139 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Dodaj namestaj</title>
 
-    <title>Prodavnica namestaja</title>
+    <script src="js/jquery.js"></script>
 
-
-
-    <!-- Bootstrap Core CSS -->
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="css/bootstrap-formhelpers.min.css" rel="stylesheet">
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
      <script src="js/bootstrap-formhelpers.min.js"></script>
      
      <link href="css/toastr.css" rel="stylesheet"/>
      <script src="js/toastr.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <script>
-    	$(document).ready(function()
-    	{
-		var jup = new Object(${trenutni});
-    		
-    		$("#sifra").val(jup.sifra);
-    		$("#naziv").val(jup.naziv);
-    		$("#boja").val(jup.boja);
-    		$("#zemlja option:selected").text(jup.zemljaProizvodje);
-    		$("#proizvodjac").val(jup.nazivProizvodjaca);
-    		$("#cena").val(jup.jedinicnaCena);
-    		$("#kolicina").val(jup.kolicina);
-    		$("#tip_namestaja").val(jup.tipNamestaja);
-    		$("#godina").val(jup.godinaProizvodnje);
-    		$("#salon").val(jup.prodajniSalon);
-    		$("#ucitana_slika").val(jup.putanjaSlike);
-    		
-    		if(jup.putanjaSlike != undefined)
-    		{
-    			$(".slika").text("Slika: " + jup.putanjaSlike + " je ucitana! Mozete dole izmeniti sliku.");
-    		}
-    		
-    		if(jup.sifra != undefined)
-    			$('#sifra').prop('readonly', true);
-    		
-    		$("#otkazi_btn").click(function(e) 
-    	    {
-    	    	e.preventDefault();
-    	    	window.location.replace("admin_panel.jsp");
-    			return;
-    	    });
-    		
-    		$("form").submit(function()
-    		{
-    			if($("#sifra").val() == "")
-    			{
-    				alert("Wuuut");
-    				return false;
-    			}
-    			
-    			if(!numberCheck($("#cena").val(), null, null, "Cena"))
-    				return false;
-    		});
-    		
-    		/*$("#sub").click(function() 
-    	    {
-    			//popunimo objekat namestaj koji saljemo serveru
-    			var namestaj = {};
-    			namestaj.sifra = $("#sifra").val();
-				namestaj.naziv = $("#naziv").val();
-				namestaj.boja = $("#boja").val();
-				namestaj.zemljaProizvodje = $("#zemlja").val();
-				namestaj.nazivProizvodjaca = $("#proizvodjac").val();
-				namestaj.jedinicnaCena = $("#cena").val();
-				namestaj.kolicina = $("#kolicina").val();
-				namestaj.tipNamestaja = $("#tip_namestaja").val();
-				namestaj.godinaProizvodnje = $("#godina").val();
-				namestaj.prodajniSalon = $("#salon").val();
-				namestaj.putanjaSlike = $("#slika").val();
-			
-			//prodjemo kroz sve i proverimo da li je popunjeno
-		
-			
-			 $.ajax({
-			     url: 'fileUpload',
-			     type: 'POST',
-			     data: formData,
-			     async: false,
-			     cache: false,
-			     contentType: false,
-			     enctype: 'multipart/form-data',
-			     processData: false,
-			     success: function (response) {
-			       alert(response);
-			     }
-			   });
-			
-				$.post("AddNamestajServlet", {u: JSON.stringify(namestaj)}, function(data, status) 
-				{
-					if(data === "success")
-					{
-						window.location.replace("admin_panel.jsp");
-					}
-					else
-					{
-						alert("dis is your falut");
-					}
-				});
-			
-    	    });*/
-			
-    	});
-    </script>
+     
+      <script src="js/error_check.js"></script>
+      <!--  <script src="js/webshop/dodajNamestaj.js"></script>  -->
+      
+      <script>
+      $(document).ready(function()
+    	    	{
+    			    var jup = new Object(${trenutni});
+    	    		var izmena = false;
+    			    
+    	    		$("#sifra").val(jup.sifra);
+    	    		$("#naziv").val(jup.naziv);
+    	    		$("#boja").val(jup.boja);
+    	    		$("#zemlja option:selected").text(jup.zemljaProizvodje);
+    	    		$("#proizvodjac").val(jup.nazivProizvodjaca);
+    	    		$("#cena").val(jup.jedinicnaCena);
+    	    		$("#kolicina").val(jup.kolicina);
+    	    		$("#tip_namestaja").val(jup.tipNamestaja);
+    	    		$("#godina").val(jup.godinaProizvodnje);
+    	    		$("#salon").val(jup.prodajniSalon);
+    	    		$("#ucitana_slika").val(jup.putanjaSlike);
+    	    		
+    	    		if(jup.putanjaSlike != undefined)
+    	    		{
+    	    			$(".slika").text("Slika: " + jup.putanjaSlike + " je ucitana! Mozete dole izmeniti sliku.");
+    	    			izmena = true;
+    	    		}
+    	    		
+    	    		if(jup.sifra != undefined)
+    	    		{
+    	    			$('#sifra').prop('readonly', true);
+    	    			izmena = true;
+    	    		}
+    	    		
+    	    		
+    	    		$("#sifra").blur(function()
+    	    	    {
+    	    	    	if(!izmena)
+    	    	    	{
+    	    	    	   if($("#sifra").val() == "")
+    	    	    	    {
+    	    	    	    	toastr.error("Morate uneti sifru namestaja");
+    	    	    	    	return;
+    	    	    	    }
+    	    	    	    			
+    	    	    	    $.post("CheckUniqueServlet", {tip:"namestaj", id:$("#sifra").val()}, function(data, status)
+    	    	    	    {
+    	    	    	    	if(data === "not_unique")
+    	    	    	    	{
+    	    	    	    			toastr.error("Sifra nije jednistven, unesite neki drugi naziv");
+    	    	    	    			$("#sifra").focus();
+    	    	    	    	}
+    	    	    	    });
+    	    	    	  }
+    	    	     });
+    	    		
+    	    		$("#otkazi_btn").click(function(e) 
+    	    	    {
+    	    	    	e.preventDefault();
+    	    	    	window.location.replace("admin_panel.jsp");
+    	    			return;
+    	    	    });
+    	    		
+    	    		$("form").submit(function()
+    	    		{
+    	    			if($("#sifra").val() == "")
+    	    			{
+    	    				toastr.error("morate izabrati sifru");
+    	    				$("#sifra").focus();
+    	    				return false;
+    	    			}
+    	    			
+    	    			if($("#boja").val() == null)
+    	    			{
+    	    				toastr.error("morate izabrati boju");
+    	    				$("#boja").focus();
+    	    				return false;
+    	    			}
+    	    			
+    	    			if($("#salon").val() == null)
+    	    			{
+    	    				toastr.error("morate izabrati salon");
+    	    				$("#salon").focus();
+    	    				return false;
+    	    			}
+    	    			
+    	    			if($("#tip_namestaja").val() == null)
+    	    			{
+    	    				toastr.error("morate izabrati tip namestaja");
+    	    				$("#tip_namestaja").focus();
+    	    				return false;
+    	    			}
+    	    			
+    	    			if($("#zemlja option:selected").text() == "")
+    	    			{
+    	    				toastr.error("morate izabrati zemlju proizvodnje");
+    	    				$("#zemlja").focus();
+    	    				return false;
+    	    			}
+    	    			
+    	    			if($("#slika").val() == "" && izmena == false)
+    	    			{
+    	    				toastr.error("morate izabrati sliku");
+    	    				return false;
+    	    			}
+    	    			
+    	    			if(!numberCheck($("#cena").val(), null, null, "Cena"))
+    	    				return false;
+    	    			
+    	    			if(!numberCheck($("#kolicina").val(), null, null, "Kolicina"))
+    	    				return false;
+    	    			
+    	    			if(!numberCheck($("#godina").val(), 0, 2015, "Godina"))
+    	    				return false;
+    	    		});
+    				
+    	    	});
+      </script>
 
 </head>
 
@@ -170,10 +180,13 @@
                     </li>
                      <c:if test="${!korisnik.isUlogovan()}">
                     <li>
-                        <a href="login_test.jsp">Prijava</a>
+                        <a href="login_test.jsp">Korisnik</a>
                     </li>
                     <li>
                         <a href="admin_login.jsp">Admin</a>
+                    </li>
+                     <li>
+                        <a href="manadzer_login.jsp">Manadzer</a>
                     </li>
                     </c:if>
                        <c:if test="${korisnik.isAdmin()}">
@@ -213,7 +226,7 @@
     </select>
     
     <label for="user">Zemlja proizvodnje:</label>
-    <select class="bfh-selectbox bfh-countries form-control" data-country="US" id="zemlja" name="zemlja"></select>
+    <select class="bfh-selectbox bfh-countries form-control" id="zemlja" name="zemlja"></select>
     <label for="user" >Naziv proizvodjaca:</label>
     
     <input class="form-control" id="proizvodjac" name="proizvodjac" required /> 
@@ -252,13 +265,6 @@
    
     </form> 
 	</div>
-	 
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 

@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +45,11 @@ public class AddRacun extends HttpServlet {
 		RacuniDAO racuni = (RacuniDAO) getServletContext().getAttribute("racuni");
 		Korisnik k = (Korisnik) request.getSession().getAttribute("korisnik");
 		
-		k.getKorpa().setDatumVreme("01-07-2015");
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		
+		String currDate = format.format(new Date());
+		
+		k.getKorpa().setDatumVreme(currDate);
 		
 		Racun r = k.getKorpa();
 		

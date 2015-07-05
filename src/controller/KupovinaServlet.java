@@ -54,6 +54,12 @@ public class KupovinaServlet extends HttpServlet {
 		
 		Purchasable p;
 		
+		if(kolicina == null || kolicina == "")
+			kolicina = "1";
+		
+		if(trenutni == null)
+			return;
+		
 		//ako hoce korisnik i dodatnu uslugu uz namestaj
 		if(dodatna_usluga != null)
 		{
@@ -101,7 +107,7 @@ public class KupovinaServlet extends HttpServlet {
 		else
 		{
 			String namestaj = usluge.findById(id).getNamestaj();
-			if(namestaj != "")
+			if(namestaj != null)
 			{
 				response.getWriter().print("povezana" + namestaj);
 				return;

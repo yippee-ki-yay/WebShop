@@ -19,96 +19,122 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Dodaj uslugu</title>
 
-    <title>Prodavnica namestaja</title>
+    <script src="js/jquery.js"></script>
 
-	     <link href="css/toastr.css" rel="stylesheet"/>
-     <script src="js/toastr.js"></script>
-
-
-    <!-- Bootstrap Core CSS -->
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
-    <link href="css/bootstrap-formhelpers.min.css" rel="stylesheet">
     
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="css/bootstrap-formhelpers.min.css" rel="stylesheet">
      <script src="js/bootstrap-formhelpers.min.js"></script>
      
       <link href="css/toastr.css" rel="stylesheet"/>
      <script src="js/toastr.js"></script>
 
 	 <script src="js/error_check.js"></script>
+	 <!--<script src="js/webshop/dodajUslugu.js"></script>  -->
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <script>
-    	$(document).ready(function()
-    	{
-    		var jup = new Object(${trenutni});
-    		
-    		$("#naziv").val(jup.naziv);
-    		$("#opis").val(jup.opis);
-    		$("#cena").val(jup.cena);
-    		
-    		if(jup.naziv != undefined)
-    			$('#naziv').prop('readonly', true);
-    		
-    		$("#otkazi_btn").click(function(e) 
-    	    {
-    			e.preventDefault();
-    			window.location.replace("admin_panel.jsp");
-				return;
-    	    });
-    		
-    		$("#sub_btn").click(function(e) 
-    		{
-    			e.preventDefault();
-    			
-    			var usluga = {};
-    			usluga.naziv = $("#naziv").val();
-    			usluga.opis = $("#opis").val();
-    			usluga.cena = $("#cena").val();
-    			usluga.namestaj = $("#namestaji").val();
-    			
-    			if(usluga.naziv == "" || usluga.opis == "" || usluga.cena == "")
-    			{
-    				toastr.error("Morate popuniti sva polja");
-    				return;
-    			}
-    			
-    			if(!numberCheck(usluga.cena, null, null, "Cena"))
-    				return;
-    			
-    			$.post("AddUsluguServlet", {u: JSON.stringify(usluga)}, function(data, status)
-    			{
-    				console.log("wtf!");
-    				
-    				if(data === "success")
-    				{
-    				
-    					window.location.replace("admin_panel.jsp");
-    					return;
-    				}
-    				else
-    				{
-    					toastr.error("morate biti korisnik da mozete izvrsiti kupovinu");
-    				}
-    			});
-    		});
-    	});
-    </script>
+	<script>
+	$(document).ready(function()
+	    	{
+	    		var jup = new Object(${trenutni});
+	    		var izmena = false;
+	    		
+	    		
+	    		$("#naziv").val(jup.naziv);
+	    		$("#opis").val(jup.opis);
+	    		$("#cena").val(jup.cena);
+	    		
+	    		if(jup.naziv != undefined)
+	    		{
+	    			$('#naziv').prop('readonly', true);
+	    			izmena = true;
+	    		}
+	    		
+	    		$("#otkazi_btn").click(function(e) 
+	    	    {
+	    			e.preventDefault();
+	    			window.location.replace("admin_panel.jsp");
+					return;
+	    	    });
+	    		
+	    		$("#naziv").blur(function()
+	    		{
+	    			if(!izmena)
+	    			{
+	    			if($("#naziv").val() == "")
+	    			{
+	    				toastr.error("Morate uneti naziv usluge");
+	    				return;
+	    			}
+	    			
+	    			$.post("CheckUniqueServlet", {tip:"usluga", id:$("#naziv").val()}, function(data, status)
+	    			{
+	    				if(data === "not_unique")
+	    				{
+	    					toastr.error("Naziv nije jednistven, unesite neki drugi naziv");
+	    					$("#naziv").focus();
+	    				}
+	    			});
+	    			}
+	    		});
+	    		
+	    		$("#sub_btn").click(function(e) 
+	    		{
+	    			e.preventDefault();
+	    			
+	    			var usluga = {};
+	    			usluga.naziv = $("#naziv").val();
+	    			usluga.opis = $("#opis").val();
+	    			usluga.cena = $("#cena").val();
+	    			usluga.namestaj = $("#namestaji").val();
+	    			
+	    			if(usluga.naziv == "")
+	    			{
+	    				toastr.error("Morate popuniti naziv");
+	    				$("#naziv").focus();
+	    				return;
+	    			}
+	    			
+	    			if(usluga.opis == "")
+	    			{
+	    				toastr.error("Morate popuniti opis");
+	    				$("#opis").focus();
+	    				return;
+	    			}
+	    			
+	    			if(usluga.cena == "")
+	    			{
+	    				toastr.error("Morate popuniti cenu");
+	    				$("#cena").focus();
+	    				return;
+	    			}
+	    			
+	    			if(!numberCheck(usluga.cena, null, null, "Cena"))
+	    				return;
+	    			
+	    			$.post("AddUsluguServlet", {u: JSON.stringify(usluga)}, function(data, status)
+	    			{
+	    				console.log("wtf!");
+	    				
+	    				if(data === "success")
+	    				{
+	    				
+	    					window.location.replace("admin_panel.jsp");
+	    					return;
+	    				}
+	    				else
+	    				{
+	    					toastr.error("morate biti korisnik da mozete izvrsiti kupovinu");
+	    				}
+	    			});
+	    		});
+	    	});
+	
+	</script>
 
 </head>
 
@@ -192,12 +218,6 @@
     		
     	</div>
     </form>
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 

@@ -8,7 +8,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import model.KomadNamestaja;
 import dao.AkcijeDAO;
 import dao.KorisnikDAO;
 import dao.NamestajiDAO;
@@ -30,8 +29,9 @@ public class Init implements ServletContextListener
 		@Override
 		public void run() 
 		{
-			//System.out.println("wut bitch");
-			akcije.updateAkcije(namestaji.getItems());
+
+          akcije.updateAkcije(namestaji.getItems());
+    
 		}
 		
 	}
@@ -39,6 +39,7 @@ public class Init implements ServletContextListener
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
+		scheduler.shutdown();
 		
 	}
 

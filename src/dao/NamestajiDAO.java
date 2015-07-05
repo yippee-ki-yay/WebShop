@@ -19,11 +19,11 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 {
 	public NamestajiDAO()
 	{
-		//openDb("namestaji");
+		openDb("namestaji");
 		
-		addData();
+		//addData();
 		
-		//readFile();
+		readFile();
 	}
 
 	
@@ -208,8 +208,6 @@ public class NamestajiDAO extends GenericDAO<KomadNamestaja>
 		items.add(new KomadNamestaja("1344","Sto za komp", "Red", "srbija", "simpo", "33", "2", kat, "1990" ,s, "sto2.jpg"));
 		items.add(new KomadNamestaja("2342","Lampa", "plava", "White", "simpo", "208", "8", "ormani", "1990" ,s, "lampa.JPG"));
 		items.add(new KomadNamestaja("2341","Krevet", "plava", "Black", "simpo", "20", "2", "kreveti", "1990" ,s, "krevet1.jpg"));
-		
-		System.out.println("LEngth: " + items.size());
 		
 		Options options = new Options();
 		options.createIfMissing(true);
