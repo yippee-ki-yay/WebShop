@@ -20,20 +20,20 @@ public class UslugeDao extends GenericDAO<DodatneUsluge>
 	
 	public UslugeDao()
 	{
-		openDb("usluge");
+		//openDb("usluge");
 		
-		//addData();
+		addData();
 		
-		readFile();
+		//readFile();
 	}
 	
 	
 	private void addData()
 	{
 		items.add(new DodatneUsluge("prevoz", "dovozimo namestaj do vase lokacije", "300"));
-		items.add(new DodatneUsluge("ugradnja", "sklopimo namestaj i ugradimo ga na licu mesta", "700"));
+		items.add(new DodatneUsluge("ugradnja", "sklopimo namestaj i ugradimo ga na licu mesta", "500"));
 		items.add(new DodatneUsluge("samaranje", "bacimo par samara", "100"));
-		items.add(new DodatneUsluge("resturacija", "obnova starog namestaja", "1000"));
+		items.add(new DodatneUsluge("resturacija", "obnova starog namestaja", "150"));
 		
 		Options options = new Options();
 		options.createIfMissing(true);

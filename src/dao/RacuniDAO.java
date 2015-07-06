@@ -21,7 +21,7 @@ public class RacuniDAO extends GenericDAO<Racun>
 	{
 		openDb("racuni");
 		
-		readFile();
+		//readFile();
 	}
 	
 	private void addData()

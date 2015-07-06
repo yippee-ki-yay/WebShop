@@ -2,6 +2,15 @@ var namestaji;
 
 	$(document).ready(function()
 	{
+		function parseDate(str) 
+		{
+		    var mdy = str.split('-')
+		    return new Date(mdy[2], mdy[1], mdy[0]);
+		}
+		
+		
+		var pocetni_date = parseDate($('#start_date').val());
+		
 		$("#check").prop("disabled", true);
 		
 		//prikaz namestaja nekog salona, kad izaberemo neki
@@ -68,13 +77,7 @@ var namestaji;
 			akcija.salon = $("#saloni").val();
 			akcija.namestaji = [];
 			var jeste_broj = true;
-			
-			
-			function parseDate(str) 
-			{
-			    var mdy = str.split('-')
-			    return new Date(mdy[2], mdy[1], mdy[0]);
-			}
+			var buduce = "false";
 			
 			function daydiff(first, second) 
 			{
@@ -93,6 +96,17 @@ var namestaji;
 			{
 				toastr.error("Krajnji datum mora biti veci od pocetnog");
 				return;
+			}
+			
+			if(pocetni_date > end_date)
+			{
+				toastr.error("Krajnji datum akcije mora biti veci od trenutnog datuma, inace akcija nije aktuelna");
+				return;
+			}
+			
+			if(start_date > pocetni_date)
+			{
+				buduce = "true";
 			}
 			
 			$(".namestaj").each(function() 
@@ -137,7 +151,13 @@ var namestaji;
 						});
 					});
 			
-			$.post("AkcijaServlet", {json: JSON.stringify(akcija)}, function(data, status)
+			if(akcija.namestaji.length == 0)
+			{
+				toastr.error("Niste naveli nijedan popust");
+				return;
+			}
+			
+			$.post("AkcijaServlet", {json: JSON.stringify(akcija), buducnost : buduce}, function(data, status)
 			{
 				if(data === "success")
 				{
@@ -156,9 +176,10 @@ var namestaji;
                    '<h4 class="pull-right">$' + value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
                    '</h4>'+
-                   '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+
+                   '<p>Sifra: '+ value.sifra + '</p>'+
                     '<p>Zemlja porekla: '+ value.zemljaProizvodje +'</p>'+
-                    '<p>Naziv proizvodjaca: ' + value.nazivProizvodjaca +'</p>'+
+                    '<p>Salon: ' + value.prodajniSalon +'</p>'+
+                    '<p>Tip namestaja: '+ value.tipNamestaja +'</p>'+
                 '</div>'+
                 '<div class="ratings">'+
                     '<p class="pull-right">' + value.kolicina + ' komada</p>'+

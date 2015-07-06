@@ -30,6 +30,7 @@ public class Racun implements Serializable, Idao
 			{
 				k.setKolicinom(Integer.toString(Integer.parseInt(k.getKolicinom()) + Integer.parseInt(kolicina)));
 				k.setCenom((Integer.toString(Integer.parseInt(k.getCenom()) + Integer.parseInt(p.getCena()))));
+				k.setKupljen("ne");
 				return;
 			}
 		}
@@ -46,6 +47,14 @@ public class Racun implements Serializable, Idao
 	public void removeAll()
 	{
 		items.clear();
+	}
+	
+	public void setKupljen()
+	{
+		for(Kupovina k : items)
+		{
+			k.setKupljen("da");
+		}
 	}
 	
 	public void removeItem(String id)
@@ -117,5 +126,7 @@ public class Racun implements Serializable, Idao
 	{
 		return this.datumVreme + this.ukupnaCena;
 	}
+	
+	
 	
 }

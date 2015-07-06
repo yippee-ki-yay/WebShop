@@ -22,11 +22,11 @@ public class TipNamestajaDAO extends GenericDAO<KategorijaNamestaja>
 	
 	public TipNamestajaDAO()
 	{
-		openDb("tipnamestaja");
+		//openDb("tipnamestaja");
 		
-		//addData();
+		addData();
 		
-		readFile();
+		//readFile();
 	}
 
 	//deprecated

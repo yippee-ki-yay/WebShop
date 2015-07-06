@@ -135,8 +135,11 @@
         	<label>Drzava: </label>
         </div>
           
+          
           <div class="col-md-2">
-          		<div class="bfh-selectbox bfh-countries" data-country="" id="drzava"></div>
+          <form>
+          		<select class="bfh-selectbox bfh-countries form-control" id="drzava"></select>
+          		</form>
           </div>
           
            <div class="col-md-1">
@@ -211,13 +214,13 @@
                                 <h4 class="pull-right">$${n.jedinicnaCena }</h4>
                                 <h4><a href="#">${ n.naziv}</a>
                                 </h4>
-                                <p>Proizvodjac: ${n.nazivProizvodjaca}</p>
+                                <p>Godina: ${n.godinaProizvodnje}</p>
                                 <p>Zemlja porekla: ${n.zemljaProizvodje }</p>
-                                <p>Naziv proizvodjaca: ${n.nazivProizvodjaca }</p>
+                                <p>Kategorija: ${n.tipNamestaja}</p>
                                 <p>Na lageru: ${n.kolicina }</p>
                             </div>
                        
-        					 <p>
+        					 <p class="kup_namestaj">
         					 	Kolicina:
          					   <input class="kolicina" type="number" value="1">
             					<a href="#" class="btn btn-primary btn_padding kup" role="button" data-id="${n.sifra }">

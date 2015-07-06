@@ -5,7 +5,7 @@ $(document).ready(function()
 					var p_naziv = $("#searchBox").val();
 					var p_boja = $("#boja").val();
 					var p_godina = $("#god").val();
-					var p_drzava = $("#drzava").val();
+					var p_drzava = $("#drzava option:selected").text();
 					var p_tip_namestaja = $("#tip_namestaja").val();
 					var p_tip = "namestaj";
 					
@@ -79,20 +79,21 @@ $(document).ready(function()
                 '<div class="thumbnail">'+
                 '<img src="img/' + value.putanjaSlike + '"  alt="">'+
                 '<div class="caption">'+
-                   '<h4 class="pull-right">' + value.jedinicnaCena + '</h4>'+
+                   '<h4 class="pull-right"> $' + value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
                    '</h4>'+
-                   '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+
+                   '<p>Godina: '+ value.godinaProizvodnje + '</p>'+
                     '<p>Zemlja porekla: '+ value.zemljaProizvodje +'</p>'+
-                    '<p>Naziv proizvodjaca: ' + value.nazivProizvodjaca +'</p>'+
+                    '<p>Kategorija: ' + value.tipNamestaja +'</p>'+
+                    '<p>Na lageru:'+ value.kolicina + '</p>'+
                 '</div>'+
-                '<div class="ratings">'+
-                    '<p class="pull-right">'
-                    '<button class="btn btn-success btn_padding del" data-id="' + value.naziv + '">Obrisi</button></p>' +
-                    '<p>'+
-							value.godinaProizvodnje +
-                    '</p>'+
-                    '</div>'+
+           	 	'<p class="kup_namestaj">'+
+			 	'Kolicina:'+
+				   '<input class="kolicina" type="number" value="1">'+
+				'<a href="#" class="btn btn-primary btn_padding kup" role="button" data-id="'+ value.sifra + '">'+
+								'Kupi'+
+						 '</a>'+
+						'</p>'+
                   '</div>'+
                '</div>';
 				

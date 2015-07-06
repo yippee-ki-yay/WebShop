@@ -26,6 +26,12 @@ body {
     overflow: hidden;
 }
 
+.kup_namestaj
+{
+	overflow: hidden;
+	padding: 9px;
+}
+
 .caption h4 {
     white-space: nowrap;
 }

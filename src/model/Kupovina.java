@@ -11,6 +11,7 @@ public class Kupovina implements Serializable
 	private String naziv_salona;
 	private String sifra;
 	private String kategorija;
+	private String kupljen = "ne";
 	
 	public Kupovina(String naziv_namestaja, String cenom, String kolicinom,
 			String naziv_salona, String sifra, String kategorija) {
@@ -57,6 +58,14 @@ public class Kupovina implements Serializable
 	}
 	public void setKategorija(String kategorija) {
 		this.kategorija = kategorija;
+	}
+	
+	public String getKupljen() {
+		return kupljen;
+	}
+
+	public void setKupljen(String kupljen) {
+		this.kupljen = kupljen;
 	}
 	
 }

@@ -102,9 +102,10 @@
                    '<h4 class="pull-right"><span class="popust">' + popust +"</span>$"+ value.jedinicnaCena + '</h4>'+
                     '<h4><a href="#">'+ value.naziv +'</a>'+
                    '</h4>'+
-                   '<p>Proizvodjac: '+ value.nazivProizvodjaca + '</p>'+
+                   '<p>Sifra: '+ value.sifra + '</p>'+
                     '<p>Zemlja porekla: '+ value.zemljaProizvodje +'</p>'+
-                    '<p>Naziv proizvodjaca: ' + value.nazivProizvodjaca +'</p>'+
+                    '<p>Naziv salona: ' + value.prodajniSalon +'</p>'+
+                    '<p>Tip namestaja: '+ value.tipNamestaja +'</p>'+
                 '</div>'+
                 '<div class="ratings">'+
                 '<p class="pull-right"> <button class="btn btn-success btn_padding del" data-id="' + value.sifra + '">Obrisi</button></p>'+
@@ -129,7 +130,7 @@
                '<div class="caption">'+
                    '<h4><a href="#">'+ value.naziv +'</a>'+
                   '</h4>'+
-                  '<p>Proizvodjac: '+ value.opis + '</p>'+
+                  '<p>Opis: '+ value.opis + '</p>'+
                   '<p>Podkatgorija: '+ podkategorija + '</p>'+
                '</div>'+
                '<div class="ratings">'+

@@ -11,7 +11,7 @@
 
 <head>
 
-    <title>Administratoski panel</title>
+    <title>Admin panel</title>
 
     <script src="js/jquery.js"></script>
 
@@ -131,17 +131,18 @@
                              <img src="img/${n.putanjaSlike } " alt="">
                             <div class="caption">
                                 <h4 class="pull-right">
-                             <%--    <c:if test="${n.procenat == ''}">
+                                <c:if test="${n.procenat != ''}">
                                 	<span class="popust">Popust :</span>
-                                </c:if>
-                                --%>
+                                </c:if> 
+                                
                                 
                                 $${n.jedinicnaCena }</h4>
                                 <h4><a href="#">${ n.naziv}</a>
                                 </h4>
-                                <p>Proizvodjac: ${n.nazivProizvodjaca}</p>
+                                <p>Sifra: ${n.sifra}</p>
                                 <p>Zemlja porekla: ${n.zemljaProizvodje }</p>
-                                <p>Naziv proizvodjaca: ${n.nazivProizvodjaca }</p>
+                                <p>Naziv salona: ${n.prodajniSalon }</p>
+                                <p>Tip namestaja: ${n.tipNamestaja }</p>
                             </div>
                             <div class="ratings">
                                 <p class="pull-right"> <button class="btn btn-success btn_padding del" data-id="${n.sifra}">Obrisi</button></p>

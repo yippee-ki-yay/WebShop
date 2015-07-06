@@ -42,11 +42,16 @@ public class AkcijaServlet extends HttpServlet {
 		AkcijeDAO akcije = (AkcijeDAO)getServletContext().getAttribute("akcije");
 		NamestajiDAO namestaji = (NamestajiDAO)getServletContext().getAttribute("namestaji");
 		
+		String buduce = request.getParameter("buducnost");
+		
 		String json = request.getParameter("json");
 		
 		Akcija a = akcije.fromJson(json);
 		
-		a.setPopust(namestaji);
+		if(buduce.equals("false"))
+			a.setPopust(namestaji);
+		else
+			a.setNaziv(namestaji);
 			
 		akcije.add(a);
 		

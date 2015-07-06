@@ -105,6 +105,7 @@
     </thead>
     <tbody id="content">
     <c:forEach var="item" items="${korisnik.korpa.items}">
+    <c:if test="${item.kupljen == 'ne' }">
       <tr>
         <td>${item.naziv}</td>
         <td>${item.kolicinom}</td>
@@ -112,6 +113,7 @@
         <td>${item.naziv_salona}</td>
         <td> <button class="btn btn-danger otkazi"  id="${item.sifra }" data-id="${item.sifra }">Otkazi kupovinu</button></td>
       </tr>
+      </c:if>
     </c:forEach>
     </tbody>
   </table>

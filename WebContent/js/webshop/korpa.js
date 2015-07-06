@@ -4,6 +4,18 @@
     		{
     			$.post("AddRacun", {}, function(data, status)
             	{
+    				if(data === "prazan")
+    				{
+    					toastr.error("Vasa korpa je prazna");
+    					return;
+    				}
+    				
+    				if(data === "prijava")
+    				{
+    					toastr.error("Morate biti registrovan korisnik");
+    					return;
+    				}
+    				
     				$("#content").empty();
     				toastr.success("Artikli su uspesno kupljeni i izdat je racun");
             	});

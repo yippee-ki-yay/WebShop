@@ -62,6 +62,10 @@ public class AddNamestajServlet extends HttpServlet {
 		String godina = request.getParameter("godina");
 		String salon = request.getParameter("salon");
 		String ucitana_slika = request.getParameter("ucitana_slika");
+		String drz = request.getParameter("drz");
+		
+		if(drz != null || drz != "")
+			zemlja = drz;
 		
 		String fileName = "";
 		

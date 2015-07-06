@@ -62,6 +62,20 @@ public class Akcija implements Serializable, Idao
 		this.salon = salon;
 	}
 
+	public void setNaziv(NamestajiDAO komadi)
+	{
+		for(NamestajPopust popust : namestaji)
+		{
+			for(KomadNamestaja komad : komadi.getItems())
+			{
+				if(komad.getId().equals(popust.getNaziv()))
+				{
+					popust.setIme(komad.getNaziv()); //setujemo ime da mozemo lepo prikazati
+				}
+			}
+		}
+	}
+	
 	public void setPopust(NamestajiDAO komadi)
 	
 	{
@@ -78,11 +92,11 @@ public class Akcija implements Serializable, Idao
 					double proc = Double.parseDouble(popust.getProcenat());
 					double originalna = Double.parseDouble(komad.getJedinicnaCena());
 					
-					double novaCenaDouble = (originalna - ((proc/100)*originalna));
+					int novaCenaDouble = (int)(originalna - ((proc/100)*originalna));
 					
-					NumberFormat formatter = new DecimalFormat("#0.00");  
+					//NumberFormat formatter = new DecimalFormat("#0.00");  
 					
-					String novaCena = formatter.format(novaCenaDouble).toString();
+					String novaCena = Integer.toString(novaCenaDouble);
 					
 					komad.setJedinicnaCena(novaCena);
 					

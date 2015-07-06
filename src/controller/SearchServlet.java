@@ -33,8 +33,6 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//TODO: refector this shit
-		
 		PrintWriter out = response.getWriter();
 		
 		String tekst = request.getParameter("naziv");
@@ -64,7 +62,7 @@ public class SearchServlet extends HttpServlet {
 		double price_min = -1;
 		double price_max = -1;
 		
-		if(cena_od != "" || cena_do != "")
+		if(cena_od != "" && cena_do != "")
 		{
 			price_min = Double.parseDouble(cena_od);
 			price_max = Double.parseDouble(cena_do);
@@ -85,7 +83,7 @@ public class SearchServlet extends HttpServlet {
 			double kapacitet_min = -1;
 			double kapacitet_max = -1;
 			
-			if(kapacitet_od != "" || kapacitet_do != "")
+			if(kapacitet_od != "" && kapacitet_do != "")
 			{
 				kapacitet_min = Double.parseDouble(kapacitet_od);
 				kapacitet_max = Double.parseDouble(kapacitet_do);
@@ -93,25 +91,6 @@ public class SearchServlet extends HttpServlet {
 			
 			json = namestaji.search(tekst, price_max, price_min, drzava, godina, boja, kapacitet_min, kapacitet_max, proizvodjac, tipNamestaja);
 		}
-		
-		/*
-		//ako ovde imamo nesto znaci da trazim namestaje po nekom salonu
-		if(poSalonu != null || poSalonu == "")
-		{
-			String json = namestaji.searchBySalon(poSalonu);
-			out.print(json);
-			return;
-		}
-		
-		//ako nema nista u tekst parametru daj mi sve namestaje
-		if(tekst == null || tekst == "")
-		{
-			out.print(namestaji.getJSON());
-			return;
-		}
-		
-		String json = namestaji.search(tekst, "name");
-		//String json = namestaji.getJSON();*/
 		
 		out.print(json);
 		

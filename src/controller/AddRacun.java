@@ -45,16 +45,26 @@ public class AddRacun extends HttpServlet {
 		RacuniDAO racuni = (RacuniDAO) getServletContext().getAttribute("racuni");
 		Korisnik k = (Korisnik) request.getSession().getAttribute("korisnik");
 		
+		if(k == null)
+		{
+			response.getWriter().print("prijava");
+			return;
+		}
+		
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		String currDate = format.format(new Date());
 		
-		k.getKorpa().setDatumVreme(currDate);
+		if(k.getKorpa().getItems().size() != 0)
+		{
+			k.getKorpa().setDatumVreme(currDate);
 		
-		Racun r = k.getKorpa();
+			racuni.add(k.getKorpa());
+			k.getKorpa().setKupljen();
+		}
+		else
+			response.getWriter().print("prazan");
 		
-		racuni.add(k.getKorpa());
-		//k.getKorpa().removeAll();
 	}
 
 }

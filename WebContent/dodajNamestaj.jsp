@@ -147,6 +147,9 @@
     	    			
     	    			if(!numberCheck($("#godina").val(), 0, 2015, "Godina"))
     	    				return false;
+    	    			
+    	    			$("#drz").val($("#zemlja option:selected").text());
+    	    			
     	    		});
     				
     	    	});
@@ -227,6 +230,7 @@
     
     <label for="user">Zemlja proizvodnje:</label>
     <select class="bfh-selectbox bfh-countries form-control" id="zemlja" name="zemlja"></select>
+    <input type='hidden' id="drz" name="drz" value=""/>
     <label for="user" >Naziv proizvodjaca:</label>
     
     <input class="form-control" id="proizvodjac" name="proizvodjac" required /> 

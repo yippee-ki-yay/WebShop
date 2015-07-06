@@ -51,7 +51,7 @@ $(document).ready(function()
 		{
 			var str = '<div class="col-sm-3 col-lg-3 col-md-3">'+
            '<div class="thumbnail">'+
-            '<div class="caption">'+
+            '<div class="caption_usluge">'+
       		'<h4 class="pull-right"> $'+ value.cena + '</h4>'+
       		 '<h4><a href="#">'+ value.naziv +'</a>'+
      		 '</h4>'+

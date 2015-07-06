@@ -30,7 +30,7 @@ public class Init implements ServletContextListener
 		public void run() 
 		{
 
-          akcije.updateAkcije(namestaji.getItems());
+          akcije.updateAkcije(namestaji);
     
 		}
 		

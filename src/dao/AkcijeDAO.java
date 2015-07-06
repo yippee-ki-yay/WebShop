@@ -23,30 +23,42 @@ public class AkcijeDAO extends GenericDAO<Akcija>
 	{
 		openDb("akcije");
 		
-		readFile();
+		//readFile();
 	}
 	
-	public synchronized void  updateAkcije(ArrayList<KomadNamestaja> komadi)
+	@SuppressWarnings("deprecation")
+	public synchronized void  updateAkcije(NamestajiDAO komadi)
 	{
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		
 		Date curr = new Date();
 		Date endDate = new Date();
-		
+		Date startDate = new Date();
 		for(Akcija a : items)
 		{
 			try {
 				curr = format.parse(format.format(new Date()));
 				endDate = format.parse(a.getEndDate());
+				startDate = format.parse(a.getStartDate());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			if(curr.after(endDate))
+			Calendar cal1 = Calendar.getInstance();
+			Calendar cal2 = Calendar.getInstance();
+			cal1.setTime(startDate);
+			cal2.setTime(curr);
+			boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+			                  cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+			
+			if(sameDay)
+				a.setPopust(komadi);
+			
+		if(curr.after(endDate))
 		for(NamestajPopust popust : a.getNamestaji())
 		{
-			for(KomadNamestaja komad : komadi)
+			for(KomadNamestaja komad : komadi.getItems())
 			{
 				if(komad.getId().equals(popust.getNaziv()))
 				{

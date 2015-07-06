@@ -1,14 +1,15 @@
    	$(document).ready(function()
     	{
-    		$("#sub").click(function()
+    		$("#sub").click(function(e)
     		{
+    			e.preventDefault();
+    			
     			var $user = $("#username").val();
     			var $pass = $("#pass").val();
     			
     			if($user == "" || $pass == "")
     			{
     				$("#valid").text("Fill out all the fields");
-    				$('#username').css({ "border": '#FF0000 1px solid'});
     				return;
     			}
     			

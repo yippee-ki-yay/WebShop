@@ -31,8 +31,8 @@ public class KorisnikDAO
 		listaKorisnika.add(new Korisnik("admin", "petar", "petrovic", "admin", Uloga.PRODAVCI, "06942342", "admin@gmail.com"));
 		listaKorisnika.add(new Korisnik("man", "marko", "markovic", "man", Uloga.MENADZERI, "06402342", "man@gmail.com"));
 		
-		//writeFile();
-		readFile();
+		writeFile();
+		//readFile();
 	}
 	
 	@SuppressWarnings("unchecked")
